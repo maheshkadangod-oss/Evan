@@ -58,7 +58,19 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .nav-cta { border: 1px solid currentColor; padding: 8px 14px; border-radius: 99px; opacity: 1 !important; }
 
 main { position: relative; z-index: 2; }
-section { position: relative; padding: 0 var(--gutter); }
+section, .marquee { position: relative; z-index: 1; }
+section { padding: 0 var(--gutter); }
+
+/* S-shaped flight path drawn on scroll */
+.trail { position: absolute; top: 0; left: 0; width: 100%; z-index: 0; pointer-events: none; overflow: visible; }
+.trail path { fill: none; stroke-linecap: round; }
+.trail-ghost { stroke: rgba(255, 178, 26, .08); stroke-width: 1.5; stroke-dasharray: 2 10; }
+.trail-glow { stroke: url(#trailGrad); stroke-width: 10; opacity: .45; }
+.trail-line { stroke: url(#trailGrad); stroke-width: 2.5; }
+.trail-tip { fill: #fff3dc; }
+.trail-halo { fill: #ff8a1a; opacity: .35; animation: pulse 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@media (max-width: 860px) { .trail-line { stroke-width: 1.75; opacity: .8; } .trail-glow { opacity: .3; } }
+@keyframes pulse { 50% { transform: scale(1.6); opacity: .12; } }
 
 /* HERO */
 .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 9vh; }
@@ -155,7 +167,7 @@ h2 { font-size: clamp(42px, 6.4vw, 104px); line-height: .92; letter-spacing: -.0
 .cta p { max-width: 44ch; margin: 30px auto 40px; color: #cfcac2; font-size: 19px; }
 .cta .btn { font-size: 18px; padding: 22px 38px; }
 
-footer { font-family: var(--mono); font-size: 12px; position: relative; z-index: 2; padding: 30px var(--gutter); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); color: var(--mute); font-size: 14px; }
+footer { font-family: var(--mono); font-size: 12px; padding-bottom: 70px !important; position: relative; z-index: 2; padding: 30px var(--gutter); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); color: var(--mute); font-size: 14px; }
 
 @media (max-width: 860px) {
   .nav nav a:not(.nav-cta) { display: none; }

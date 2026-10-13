@@ -2,6 +2,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 import { createScene } from './scene.js'
+import { createTrail } from './trail.js'
 import { site, hero, marquee, fit, approach, cases, about, cta } from './content.js'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -88,6 +89,8 @@ app.innerHTML = `
   </footer>
 `
 document.querySelectorAll('[data-dm]').forEach((a) => { a.href = dm; a.target = '_blank'; a.rel = 'noopener' })
+
+createTrail(app)
 
 // ---------- smooth scroll ----------
 const lenis = new Lenis({ lerp: 0.09, smoothWheel: !reduced })
