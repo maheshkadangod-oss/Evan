@@ -2,6 +2,8 @@
 
 Personal site for Evan David Lee, Jetspeed Social. Vite + Three.js + GSAP ScrollTrigger + Lenis.
 
+The page is one pinned stage. Scrolling slides each scene in sideways: words on one side, Evan on the other, swapping sides every scene. The timeline lives in `build()` in `src/main.js`; figure positions per scene are in `poses`.
+
 ## Edit the words
 All copy lives in `src/content.js`. Case studies marked `placeholder: true` show a yellow
 PLACEHOLDER tag until real numbers from the deck replace them. Set `dmLink` to Evan's real DM link.

@@ -67,7 +67,7 @@ export function createScene(canvas, { onProgress } = {}) {
   rig.add(turn)
   scene.add(rig)
 
-  const state = { x: 0, y: 0, rotY: 0, scale: 1, opacity: 1, reveal: 0, speed: 1 }
+  const state = { x: 0, y: 0, rotY: 0, scale: 1, opacity: 1, mdim: 1, reveal: 0, speed: 1 }
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 }
 
   // ---------- relief portrait ----------
@@ -192,15 +192,19 @@ export function createScene(canvas, { onProgress } = {}) {
     pointer.x += (pointer.tx - pointer.x) * 0.06
     pointer.y += (pointer.ty - pointer.y) * 0.06
 
-    const xMul = mobile ? 0 : 1
+    // state.x is in half-screens, so the figure lands on the free side at any aspect ratio
+    const halfW = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z * camera.aspect
+    const xMul = mobile ? 0 : halfW
     rig.position.set(state.x * xMul, state.y + Math.sin(t * 0.8) * 0.04 + (mobile ? 1.1 : 0), 0)
     rig.scale.setScalar(state.scale * (mobile ? 0.55 : 1))
     turn.rotation.y = state.rotY + pointer.x * 0.35
     turn.rotation.x = pointer.y * 0.06
     mat.uniforms.uReveal.value = state.reveal
-    mat.uniforms.uOpacity.value = state.opacity
-    halo.material.opacity = 0.55 * state.opacity
-    halo2.material.opacity = 0.18 * state.opacity
+    const op = state.opacity * (mobile ? state.mdim : 1)
+    mat.uniforms.uOpacity.value = op
+    portrait.visible = op > 0.01
+    halo.material.opacity = 0.55 * op
+    halo2.material.opacity = 0.18 * op
     halo2.scale.setScalar(1.9 + Math.sin(t * 1.4) * 0.12)
 
     const speed = (state.speed + Math.min(Math.abs(scrollVel) * 0.02, 6)) * dt * 14
