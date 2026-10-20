@@ -1,0 +1,145 @@
+// Structured data and crawler files. Runs at build time only.
+import { site, hero, cases, services, faq } from './content.js'
+
+const abs = (p = '/') => site.url + p
+
+const org = {
+  '@type': ['ProfessionalService', 'LocalBusiness'],
+  '@id': abs('/#jetspeedsocial'),
+  name: site.company,
+  url: site.agency,
+  telephone: '+1-239-877-2927',
+  address: { '@type': 'PostalAddress', streetAddress: '5660 Strand Ct', addressLocality: 'Naples', addressRegion: 'FL', postalCode: '34110', addressCountry: 'US' },
+  areaServed: { '@type': 'Country', name: 'United States' },
+  founder: { '@id': abs('/#evan') },
+  sameAs: [site.instagram, 'https://www.linkedin.com/company/jetspeedsocial/'],
+  knowsAbout: ['Google Ads', 'Facebook Ads', 'YouTube Ads', 'Search engine optimization', 'Generative engine optimization', 'Web design', 'Fractional CMO'],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Marketing services',
+    itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, description: s.body } })),
+  },
+}
+
+const person = {
+  '@type': 'Person',
+  '@id': abs('/#evan'),
+  name: site.fullName,
+  alternateName: site.name,
+  jobTitle: 'Marketing Growth Partner and Fractional CMO',
+  url: abs('/'),
+  image: abs('/img/evan-portrait.webp'),
+  worksFor: { '@id': abs('/#jetspeedsocial') },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Samford University' },
+  homeLocation: { '@type': 'Place', name: 'Naples, Florida' },
+  sameAs: [site.linkedin, site.instagram],
+}
+
+const website = { '@type': 'WebSite', '@id': abs('/#website'), url: abs('/'), name: site.fullName, inLanguage: 'en-US', publisher: { '@id': abs('/#evan') } }
+
+const crumbs = (items) => ({
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(path) })),
+})
+
+export function homeSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      website,
+      person,
+      org,
+      { '@type': 'ProfilePage', '@id': abs('/#page'), url: abs('/'), name: `${site.fullName} · Growth That Pays for Itself`, mainEntity: { '@id': abs('/#evan') }, isPartOf: { '@id': abs('/#website') }, breadcrumb: crumbs([['Home', '/']]) },
+      { '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+      { '@type': 'ItemList', name: 'Case studies', itemListElement: cases.map((c, i) => ({ '@type': 'ListItem', position: i + 1, url: abs(`/work/${c.slug}/`), name: `${c.client}: ${c.headline}` })) },
+    ],
+  }
+}
+
+export function caseSchema(c) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      website,
+      person,
+      org,
+      {
+        '@type': 'Article',
+        '@id': abs(`/work/${c.slug}/#article`),
+        headline: `${c.client}: ${c.headline}`,
+        description: c.summary,
+        about: { '@type': 'Organization', name: c.client },
+        author: { '@id': abs('/#evan') },
+        publisher: { '@id': abs('/#jetspeedsocial') },
+        mainEntityOfPage: abs(`/work/${c.slug}/`),
+        inLanguage: 'en-US',
+        image: abs('/og.jpg'),
+      },
+      crumbs([['Home', '/'], ['Work', '/#work'], [c.client, `/work/${c.slug}/`]]),
+    ],
+  }
+}
+
+export function sitemap(paths, lastmod) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${paths.map((p) => `  <url><loc>${abs(p)}</loc><lastmod>${lastmod}</lastmod></url>`).join('\n')}
+</urlset>
+`
+}
+
+export function robots() {
+  return `# Search engines and AI assistants are welcome here.
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: ${abs('/sitemap.xml')}
+`
+}
+
+// llms.txt: a plain summary for AI assistants (GEO / AEO).
+export function llmsTxt() {
+  return `# ${site.fullName}
+
+> ${site.fullName} (${site.name}) is a marketing growth partner and fractional CMO based in Naples, Florida, and founder of ${site.company}, a digital marketing agency at ${site.address}. He works with B2B and B2C businesses across the United States on Google Ads, YouTube Ads, Facebook and Instagram ads, SEO, GEO, websites, social media and brand creative.
+
+## Key facts
+- Role: ${site.role}
+- Agency: ${site.company} (${site.agency})
+- Location: ${site.address}
+- Phone: ${site.phone}
+- Book a call: ${site.bookLink}
+- Education: Samford University
+- LinkedIn: ${site.linkedin}
+
+## Results
+${hero.proof.map((p) => `- ${p.value}: ${p.label}`).join('\n')}
+
+## Case studies
+${cases.map((c) => `- [${c.client}: ${c.headline}](${abs(`/work/${c.slug}/`)}): ${c.summary}`).join('\n')}
+
+## Services
+${services.map((s) => `- ${s.name}: ${s.body}`).join('\n')}
+
+## Frequently asked questions
+${faq.map((f) => `### ${f.q}\n${f.a}`).join('\n\n')}
+`
+}
