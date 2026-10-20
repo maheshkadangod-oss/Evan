@@ -7,17 +7,45 @@ import { site, hero, industries, cases, moreWork, services, method, about, cta, 
 const ext = 'target="_blank" rel="noopener"'
 const year = new Date().getFullYear()
 
+export const sections = [
+  ['work', 'Work'],
+  ['method', 'Method'],
+  ['services', 'Services'],
+  ['reach', 'Clients'],
+  ['about', 'About'],
+  ['faq', 'FAQ'],
+]
+
+// Splits a heading into masked words for the word-by-word reveal. Text stays plain for crawlers.
+export const words = (t) => t.split(' ').map((w) => `<span class="w"><span>${w}</span></span>`).join(' ')
+
 export function navHtml(prefix = '') {
   return `<header class="nav">
-      <a href="${prefix || '#top'}" class="logo"><span>${site.name}</span><small>Growth partner</small></a>
-      <nav aria-label="Main">
-        <a href="${prefix}#work">Work</a>
-        <a href="${prefix}#method">Method</a>
-        <a href="${prefix}#services">Services</a>
-        <a href="${prefix}#faq">FAQ</a>
-        <a href="${site.bookLink}" ${ext} class="nav-cta">Book a call</a>
+      <a href="${prefix || '#top'}" class="logo" aria-label="${site.name}, back to top"><span>${site.name}</span><small>Growth partner</small></a>
+      <nav aria-label="Main" class="nav-links">
+        ${sections.map(([id, label]) => `<a href="${prefix}#${id}" data-spy="${id}">${label}</a>`).join('')}
+        <i class="nav-ink" aria-hidden="true"></i>
       </nav>
-    </header>`
+      <div class="nav-right">
+        <a href="${site.bookLink}" ${ext} class="nav-cta">Book a call</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu"><span class="sr-only">Open menu</span><i></i><i></i></button>
+      </div>
+      <b class="nav-progress" aria-hidden="true"></b>
+    </header>
+    <div class="menu" id="menu" aria-hidden="true">
+      <nav aria-label="Mobile">
+        ${sections.map(([id, label], i) => `<a href="${prefix}#${id}" data-spy="${id}" style="--i:${i}"><small>${String(i + 1).padStart(2, '0')}</small>${label}</a>`).join('')}
+      </nav>
+      <div class="menu-foot" style="--i:${sections.length}">
+        <a class="btn primary" href="${site.bookLink}" ${ext}>Book a strategy call<i aria-hidden="true">→</i></a>
+        <a class="menu-tel" href="tel:${site.tel}">${site.phone}</a>
+        <span>${site.address}</span>
+      </div>
+    </div>
+    <div class="mbar" aria-label="Quick contact">
+      <a href="${site.bookLink}" ${ext} class="mbar-book">Book a call</a>
+      <a href="tel:${site.tel}" class="mbar-call" aria-label="Call ${site.phone}">Call</a>
+    </div>`
 }
 
 export function footerHtml() {
@@ -33,7 +61,7 @@ function caseBlock(c, i) {
   <article class="case ${i % 2 ? 'flip' : ''}" id="case-${c.slug}">
     <div class="case-copy from-${i % 2 ? 'right' : 'left'}">
       <p class="case-meta"><span>${String(i + 1).padStart(2, '0')}</span>${c.client} · ${c.industry}</p>
-      <h3>${c.headline}</h3>
+      <h3 class="sw">${words(c.headline)}</h3>
       <p class="case-sum">${c.summary}</p>
       <dl class="metrics">${c.metrics.map((m) => `<div><dt>${m.label}</dt><dd>${m.value}</dd></div>`).join('')}</dl>
       <p class="channels">${c.channels}</p>
@@ -66,7 +94,7 @@ export function renderHome() {
       </div>
     </figure>
   </div>
-  <ul class="proof">
+  <ul class="proof" data-carousel>
     ${hero.proof.map((p) => `<li class="rv"><strong>${p.value}</strong><span>${p.label}</span></li>`).join('')}
   </ul>
 </section>
@@ -79,10 +107,11 @@ export function renderHome() {
 <section class="work" id="work">
   <header class="sec-head">
     <p class="kicker rv">Selected work</p>
-    <h2 class="rv">Results, in the client’s own numbers.</h2>
+    <h2 class="sw">${words('Results, in the client’s own numbers.')}</h2>
     <p class="sec-sub rv">Every figure below comes from the ad, analytics and search accounts we ran.</p>
   </header>
-  ${cases.map(caseBlock).join('')}
+  <div class="cases" data-carousel>${cases.map(caseBlock).join('')}</div>
+  <div class="dots" aria-hidden="true">${cases.map((c, i) => `<button type="button" data-dot="${i}" tabindex="-1"></button>`).join('')}<span>Swipe</span></div>
   <div class="more">
     <h3 class="rv">More results</h3>
     <table class="more-table">
@@ -96,7 +125,7 @@ export function renderHome() {
   <div class="split">
     <div class="from-left">
       <p class="kicker">The method</p>
-      <h2>${method.title}</h2>
+      <h2 class="sw">${words(method.title)}</h2>
       <ol class="steps">${method.steps.map((s) => `<li class="rv"><span class="n">${s.n}</span><div><h3>${s.name}</h3><p>${s.body}</p></div></li>`).join('')}</ol>
     </div>
     <div class="from-right">${funnelSvg()}</div>
@@ -107,7 +136,7 @@ export function renderHome() {
   <div class="split top">
     <div class="sticky">
       <p class="kicker rv">Services</p>
-      <h2 class="rv">One team for the whole path to revenue.</h2>
+      <h2 class="sw">${words('One team for the whole path to revenue.')}</h2>
       <p class="sec-sub rv">Delivered through <a class="inline" href="${site.agency}" ${ext}>JetSpeedSocial</a>, my agency in Naples.</p>
     </div>
     <ol class="svc">${services.map((s, i) => `<li class="rv"><span class="n">${String(i + 1).padStart(2, '0')}</span><div><h3>${s.name}</h3><p>${s.body}</p></div></li>`).join('')}</ol>
@@ -118,7 +147,7 @@ export function renderHome() {
   <div class="split">
     <div class="from-left">
       <p class="kicker">Based in Southwest Florida</p>
-      <h2>Naples to New York, and coast to coast.</h2>
+      <h2 class="sw">${words('Naples to New York, and coast to coast.')}</h2>
       <p class="sec-sub">A sample of where clients in the case study deck are based.</p>
       <ul class="places">${places.map((p, i) => `<li class="rv" data-place="${i}"><b>${p.city}${p.hq ? ' <em>home base</em>' : ''}</b><span>${p.clients.join(', ')}</span></li>`).join('')}</ul>
     </div>
@@ -140,7 +169,7 @@ export function renderHome() {
     <figure class="about-photo from-left"><img src="/img/evan-life.webp" alt="Evan Lee at home in Naples, Florida" loading="lazy" width="1156" height="1022" /></figure>
     <div class="from-right">
       <p class="kicker">About</p>
-      <h2>${about.title}</h2>
+      <h2 class="sw">${words(about.title)}</h2>
       ${about.body.map((p) => `<p class="body">${p}</p>`).join('')}
       <ul class="creds">${about.creds.map((c) => `<li>${c}</li>`).join('')}</ul>
       <p class="links"><a href="${site.linkedin}" ${ext}>LinkedIn</a><a href="${site.instagram}" ${ext}>Instagram</a><a href="${site.agency}" ${ext}>JetSpeedSocial</a></p>
@@ -152,7 +181,7 @@ export function renderHome() {
   <div class="split top">
     <div class="sticky">
       <p class="kicker rv">Questions</p>
-      <h2 class="rv">Straight answers.</h2>
+      <h2 class="sw">${words('Straight answers.')}</h2>
     </div>
     <div class="faq-list">${faq.map((f, i) => `
       <details class="rv"${i === 0 ? ' open' : ''}><summary><h3>${f.q}</h3><i aria-hidden="true"></i></summary><p>${f.a}</p></details>`).join('')}

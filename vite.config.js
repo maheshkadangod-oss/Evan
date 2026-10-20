@@ -76,10 +76,17 @@ function prerender() {
     ${FONTS}
     ${css}
   </head>
-  <body class="sub">
+  <body class="sub mbar-on">
     ${navHtml('/').replace('class="nav"', 'class="nav solid"')}
     <main id="app">${renderCase(c)}</main>
     ${footerHtml()}
+    <script>
+      // phone menu on case study pages (the home page gets this from main.js)
+      const b = document.body, btn = document.querySelector('.menu-btn'), m = document.getElementById('menu')
+      const set = (o) => { b.classList.toggle('menu-open', o); btn.setAttribute('aria-expanded', o); m.setAttribute('aria-hidden', !o) }
+      btn.addEventListener('click', () => set(!b.classList.contains('menu-open')))
+      m.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)))
+    </script>
   </body>
 </html>
 `
