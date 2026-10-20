@@ -2,17 +2,17 @@
 // engines and AI crawlers get the full content without running any JavaScript.
 import { renderChart, funnelSvg } from './charts.js'
 import { mapSize, nationPath, statesPath, places } from './us-map.js'
-import { site, hero, industries, cases, moreWork, services, method, about, cta, faq, numbers } from './content.js'
+import { site, hero, industries, cases, moreWork, services, method, about, cta, faq, numbers, liveCases, liveMoreWork, liveProof, showNumbers } from './content.js'
 
 const ext = 'target="_blank" rel="noopener"'
 const year = new Date().getFullYear()
 
 export const sections = [
-  ['numbers', 'Numbers'],
-  ['work', 'Work'],
+  ...(showNumbers ? [['numbers', 'Numbers']] : []),
+  ['work', liveCases.length ? 'Work' : 'Results'],
   ['method', 'Method'],
   ['services', 'Services'],
-  ['reach', 'Clients'],
+  ['reach', liveCases.length ? 'Clients' : 'Where'],
   ['about', 'About'],
   ['faq', 'FAQ'],
 ]
@@ -72,6 +72,9 @@ function caseBlock(c, i) {
   </article>`
 }
 
+// Client cities come from the deck too, so they only show once results are verified.
+const mapPlaces = liveCases.length ? places : places.filter((p) => p.hq)
+
 export function renderHome() {
   return `
 <section class="hero" id="top">
@@ -82,30 +85,30 @@ export function renderHome() {
       <p class="lead rv">${hero.sub}</p>
       <div class="btns rv">
         <a class="btn primary" href="${site.bookLink}" ${ext}>${hero.primary}<i aria-hidden="true">→</i></a>
-        <a class="btn ghost" href="#work">${hero.secondary}</a>
+        <a class="btn ghost" href="#method">${hero.secondary}</a>
       </div>
     </div>
     <figure class="portrait rv">
       <div class="portrait-frame"><img src="/img/evan-portrait.webp" alt="Portrait of Evan Lee, marketing growth partner in Naples, Florida" width="880" height="1100" fetchpriority="high" /></div>
       <figcaption><span>${site.name}</span><span>${site.city}</span></figcaption>
-      <div class="float-card" aria-hidden="true">
+      ${liveCases.some((c) => c.slug === 'peddinghaus') ? `<div class="float-card" aria-hidden="true">
         <span class="fc-k">Peddinghaus · Google Ads</span>
         <div class="fc-row"><span>Before</span><b class="fc-bar base" style="--v:.39"></b><em>2 to 3x</em></div>
         <div class="fc-row"><span>Now</span><b class="fc-bar hi" style="--v:1"></b><em>6.34x</em></div>
-      </div>
+      </div>` : ''}
     </figure>
   </div>
   <ul class="proof" data-carousel>
-    ${hero.proof.map((p) => `<li class="rv"><strong>${p.value}</strong><span>${p.label}</span></li>`).join('')}
+    ${(liveProof.length ? liveProof : hero.principles).map((p) => `<li class="rv"><strong>${p.value}</strong><span>${p.label}</span></li>`).join('')}
   </ul>
 </section>
 
 <section class="industries" aria-label="Industries served">
-  <p class="kicker">Industries I’ve grown</p>
+  <p class="kicker">Built for owners in</p>
   <div class="ind-track">${[...industries, ...industries].map((x, i) => `<span${i >= industries.length ? ' aria-hidden="true"' : ''}>${x}</span>`).join('')}</div>
 </section>
 
-<section class="numbers" id="numbers">
+${showNumbers ? `<section class="numbers" id="numbers">
   <header class="sec-head">
     <p class="kicker">By the numbers</p>
     <h2 class="sw">${words('The work, counted.')}</h2>
@@ -113,23 +116,33 @@ export function renderHome() {
   </header>
   <ul class="stat-row" data-carousel>${numbers.stats.map((st) => `<li class="rv"><strong>${st.value}</strong><span>${st.label}</span></li>`).join('')}</ul>
   <div class="dash">${numbers.charts.map((ch) => renderChart(ch)).join('')}</div>
-</section>
+</section>` : ''}
 
 <section class="work" id="work">
-  <header class="sec-head">
+  ${liveCases.length ? `<header class="sec-head">
     <p class="kicker rv">Selected work</p>
     <h2 class="sw">${words('Results, in the client’s own numbers.')}</h2>
     <p class="sec-sub rv">Every figure below comes from the ad, analytics and search accounts we ran.</p>
   </header>
-  <div class="cases" data-carousel>${cases.map(caseBlock).join('')}</div>
-  <div class="dots" aria-hidden="true">${cases.map((c, i) => `<button type="button" data-dot="${i}" tabindex="-1"></button>`).join('')}<span>Swipe</span></div>
-  <div class="more">
+  <div class="cases" data-carousel>${liveCases.map(caseBlock).join('')}</div>
+  <div class="dots" aria-hidden="true">${liveCases.map((c, i) => `<button type="button" data-dot="${i}" tabindex="-1"></button>`).join('')}<span>Swipe</span></div>` : `<div class="pending">
+    <div>
+      <p class="kicker">Results</p>
+      <h2 class="sw">${words('Real numbers, signed off first.')}</h2>
+    </div>
+    <div>
+      <p class="lead">I only publish client results once the client has approved them. Case studies are on their way.</p>
+      <p class="sec-sub">Want to see real campaigns now? On a strategy call I’ll walk you through live accounts and dashboards, with client details kept private.</p>
+      <div class="btns"><a class="btn primary" href="${site.bookLink}" ${ext}>See real campaigns on a call<i aria-hidden="true">→</i></a></div>
+    </div>
+  </div>`}
+  ${liveMoreWork.length ? `<div class="more">
     <h3 class="rv">More results</h3>
     <table class="more-table">
       <thead><tr><th>Client</th><th>Industry</th><th>Channels</th><th>Outcome</th></tr></thead>
-      <tbody>${moreWork.map((m) => `<tr class="rv"><td>${m.client}</td><td>${m.industry}</td><td>${m.channels}</td><td>${m.outcome || '<span class="muted">Case study on request</span>'}</td></tr>`).join('')}</tbody>
+      <tbody>${liveMoreWork.map((m) => `<tr class="rv"><td>${m.client}</td><td>${m.industry}</td><td>${m.channels}</td><td>${m.outcome || '<span class="muted">Case study on request</span>'}</td></tr>`).join('')}</tbody>
     </table>
-  </div>
+  </div>` : ''}
 </section>
 
 <section class="method" id="method">
@@ -158,16 +171,18 @@ export function renderHome() {
   <div class="split">
     <div class="from-left">
       <p class="kicker">Based in Southwest Florida</p>
-      <h2 class="sw">${words('Naples to New York, and coast to coast.')}</h2>
-      <p class="sec-sub">A sample of where clients in the case study deck are based.</p>
-      <ul class="places">${places.map((p, i) => `<li class="rv" data-place="${i}"><b>${p.city}${p.hq ? ' <em>home base</em>' : ''}</b><span>${p.clients.join(', ')}</span></li>`).join('')}</ul>
+      <h2 class="sw">${words(liveCases.length ? 'Naples to New York, and coast to coast.' : 'Naples roots. Clients anywhere in the U.S.')}</h2>
+      <p class="sec-sub">${liveCases.length ? 'A sample of where clients are based.' : 'Work runs on video calls and shared dashboards, so distance doesn’t matter.'}</p>
+      <ul class="places">${liveCases.length
+        ? mapPlaces.map((p, i) => `<li class="rv" data-place="${i}"><b>${p.city}${p.hq ? ' <em>home base</em>' : ''}</b><span>${p.clients.join(', ')}</span></li>`).join('')
+        : [['Home base', site.address], ['Who I work with', 'B2B and B2C owners across the United States'], ['How we meet', 'Video calls, shared dashboards, and coffee if you’re in Naples']].map(([k, v], i) => `<li class="rv"${i === 0 ? ' data-place="0"' : ''}><b>${k}</b><span>${v}</span></li>`).join('')}</ul>
     </div>
     <figure class="map from-right">
-      <svg viewBox="0 0 ${mapSize.w} ${mapSize.h}" role="img" aria-label="Map of the United States with client locations in ${places.map((p) => p.city).join('; ')}">
+      <svg viewBox="0 0 ${mapSize.w} ${mapSize.h}" role="img" aria-label="Map of the United States marking ${mapPlaces.map((p) => p.city).join('; ')}">
         <path class="nation" d="${nationPath}"/>
         <path class="states" d="${statesPath}"/>
-        ${places.filter((p) => !p.hq).map((p) => `<path class="route" d="M${places[0].xy[0]} ${places[0].xy[1]} Q ${(places[0].xy[0] + p.xy[0]) / 2 - 60} ${(places[0].xy[1] + p.xy[1]) / 2 - 60} ${p.xy[0]} ${p.xy[1]}"/>`).join('')}
-        ${places.map((p, i) => `<g class="pin ${p.hq ? 'hq' : ''}" data-place="${i}" data-tip="${p.city}: ${p.clients.join(', ')}" transform="translate(${p.xy[0]} ${p.xy[1]})">
+        ${mapPlaces.filter((p) => !p.hq).map((p) => `<path class="route" d="M${places[0].xy[0]} ${places[0].xy[1]} Q ${(places[0].xy[0] + p.xy[0]) / 2 - 60} ${(places[0].xy[1] + p.xy[1]) / 2 - 60} ${p.xy[0]} ${p.xy[1]}"/>`).join('')}
+        ${mapPlaces.map((p, i) => `<g class="pin ${p.hq ? 'hq' : ''}" data-place="${i}" data-tip="${p.hq && !liveCases.length ? `${p.city}: home base` : `${p.city}: ${p.clients.join(', ')}`}" transform="translate(${p.xy[0]} ${p.xy[1]})">
           <circle class="hit" r="22" fill="transparent"/>${p.hq ? '<circle class="pulse" r="10"/>' : ''}<circle class="dot" r="${p.hq ? 7 : 5.5}"/>
           <text x="12" y="-10">${p.city}</text></g>`).join('')}
       </svg>
@@ -214,8 +229,8 @@ export function renderHome() {
 
 // One standalone page per featured case study, with visible breadcrumbs.
 export function renderCase(c) {
-  const i = cases.indexOf(c)
-  const next = cases[(i + 1) % cases.length]
+  const i = liveCases.indexOf(c)
+  const next = liveCases[(i + 1) % liveCases.length]
   return `
 <section class="case-page">
   <nav class="crumbs" aria-label="Breadcrumb"><ol>
@@ -232,7 +247,7 @@ export function renderCase(c) {
   <div class="cp-charts${c.extra ? ' two' : ''}">${renderChart(c.chart)}${c.extra ? renderChart(c.extra) : ''}</div>
   <div class="cp-next">
     <a class="btn primary" href="${site.bookLink}" ${ext}>Get a plan like this for your business<i aria-hidden="true">→</i></a>
-    <a class="next-case" href="/work/${next.slug}/"><small>Next case study</small>${next.client}: ${next.headline}</a>
+    ${next && next !== c ? `<a class="next-case" href="/work/${next.slug}/"><small>Next case study</small>${next.client}: ${next.headline}</a>` : ''}
   </div>
 </section>`
 }

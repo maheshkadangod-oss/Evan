@@ -52,7 +52,7 @@ function prerender() {
       return html
         .replace('<!--seo-head-->', headTags({
           title: 'Evan Lee · Marketing Growth Partner & Fractional CMO in Naples, FL',
-          description: 'Evan Lee helps B2B and B2C businesses grow with Google Ads, Facebook Ads, SEO and GEO. 6.34x ROAS for a manufacturer, 200+ booked demos, #1 on Google. Based in Naples, Florida.',
+          description: 'Evan Lee is a marketing growth partner and fractional CMO in Naples, Florida. Google Ads, Facebook Ads, SEO, GEO and websites, tracked to revenue for B2B and B2C owners across the U.S.',
           path: '/', type: 'profile', schema: homeSchema(), site,
         }))
         .replace('<!--nav-->', navHtml())
@@ -62,7 +62,7 @@ function prerender() {
     async generateBundle(_, bundle) {
       const { renderCase, navHtml, footerHtml } = await import(fileUrl('/src/render.js'))
       const seo = await import(fileUrl('/src/seo.js'))
-      const { site, cases } = await import(fileUrl('/src/content.js'))
+      const { site, liveCases: cases } = await import(fileUrl('/src/content.js'))
       const css = Object.values(bundle).filter((f) => f.fileName.endsWith('.css')).map((f) => `<link rel="stylesheet" href="/${f.fileName}" />`).join('')
       for (const c of cases) {
         const html = `<!doctype html>

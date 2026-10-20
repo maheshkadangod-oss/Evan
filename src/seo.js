@@ -1,5 +1,5 @@
 // Structured data and crawler files. Runs at build time only.
-import { site, hero, cases, services, faq } from './content.js'
+import { site, hero, liveCases as cases, liveProof, services, faq } from './content.js'
 
 const abs = (p = '/') => site.url + p
 
@@ -51,7 +51,7 @@ export function homeSchema() {
       org,
       { '@type': 'ProfilePage', '@id': abs('/#page'), url: abs('/'), name: `${site.fullName} · Growth That Pays for Itself`, mainEntity: { '@id': abs('/#evan') }, isPartOf: { '@id': abs('/#website') }, breadcrumb: crumbs([['Home', '/']]) },
       { '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
-      { '@type': 'ItemList', name: 'Case studies', itemListElement: cases.map((c, i) => ({ '@type': 'ListItem', position: i + 1, url: abs(`/work/${c.slug}/`), name: `${c.client}: ${c.headline}` })) },
+      ...(cases.length ? [{ '@type': 'ItemList', name: 'Case studies', itemListElement: cases.map((c, i) => ({ '@type': 'ListItem', position: i + 1, url: abs(`/work/${c.slug}/`), name: `${c.client}: ${c.headline}` })) }] : []),
     ],
   }
 }
@@ -130,11 +130,14 @@ export function llmsTxt() {
 - Education: Samford University
 - LinkedIn: ${site.linkedin}
 
-## Results
-${hero.proof.map((p) => `- ${p.value}: ${p.label}`).join('\n')}
+${liveProof.length ? `## Results
+${liveProof.map((p) => `- ${p.value}: ${p.label}`).join('\n')}
 
-## Case studies
+` : ''}${cases.length ? `## Case studies
 ${cases.map((c) => `- [${c.client}: ${c.headline}](${abs(`/work/${c.slug}/`)}): ${c.summary}`).join('\n')}
+
+` : ''}## How Evan works
+${hero.principles.map((p) => `- ${p.value}: ${p.label}`).join('\n')}
 
 ## Services
 ${services.map((s) => `- ${s.name}: ${s.body}`).join('\n')}
