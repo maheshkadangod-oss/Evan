@@ -6,7 +6,6 @@ import { prepare, decode } from './scramble.js'
 
 // Page HTML is pre-rendered at build time (src/render.js). This file only adds motion and the header.
 gsap.registerPlugin(ScrollTrigger)
-gsap.config({ nullTargetWarn: false }) // some sections only render once their content is verified
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const mm = gsap.matchMedia()
 const DESK = '(min-width: 961px)'

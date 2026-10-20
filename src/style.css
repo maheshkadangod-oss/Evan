@@ -229,11 +229,6 @@ h2 { font-size: clamp(36px, 4.4vw, 66px); line-height: 1.02; letter-spacing: -0.
 .cp-charts { margin-top: 56px; display: grid; gap: 20px; max-width: 720px; }
 .cp-charts.two { grid-template-columns: 1fr 1fr; max-width: none; }
 
-/* ---------- results placeholder (until case studies are verified) ---------- */
-.pending { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: end; padding: clamp(32px, 5vw, 64px); border: 1px solid var(--line); border-radius: 20px; background: var(--card); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-.pending .lead { margin-bottom: 14px; }
-.pending .sec-sub { margin: 0 0 28px; }
-
 /* ---------- method ---------- */
 .method { padding-block: 120px; }
 .steps { list-style: none; margin-top: 44px; border-top: 1px solid var(--line); position: relative; --p: 0; }
@@ -378,7 +373,7 @@ body.sub { background: radial-gradient(1200px 600px at 75% -10%, rgba(217, 98, 4
   .menu { display: none; }
 }
 @media (max-width: 960px) {
-  .hero-grid, .split, .case, .dash, .cp-charts.two, .pending { grid-template-columns: 1fr; }
+  .hero-grid, .split, .case, .dash, .cp-charts.two { grid-template-columns: 1fr; }
   .stat-row { border: 0; margin-bottom: 24px; }
   .stat-row li, .stat-row li + li { flex: 0 0 62%; scroll-snap-align: start; border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--card); }
   .ring-wrap { grid-template-columns: 150px 1fr; gap: 18px; }

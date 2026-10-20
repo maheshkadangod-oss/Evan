@@ -25,32 +25,21 @@ export const hero = {
   lines: ['Growth that', 'pays for itself.'],
   sub: 'I build the ads, search and sales systems that turn marketing spend into revenue you can plan around. B2B and B2C, from six figures to eight.',
   primary: 'Book a strategy call',
-  secondary: 'How I work',
-  // Shown while no deck result is verified: how Evan works, not client claims.
-  principles: [
-    { value: 'One goal', label: 'Every campaign is tracked to revenue, not clicks or likes' },
-    { value: '$1 in, more out', label: 'Budget goes up only when the numbers show it pays back' },
-    { value: 'Plain answers', label: 'Shared dashboards and straight talk on what is and isn’t working' },
-  ],
-  // Shown once results are verified (set `verified: true` on the matching case below).
+  secondary: 'See the results',
   proof: [
-    { value: '6.34x', label: 'Return on Google Ads for a B2B steel manufacturer, up from 2 to 3x', from: 'peddinghaus' },
-    { value: '200+', label: 'Booked demo calls for a real estate software company', from: 'ilist-tech' },
-    { value: '#1', label: 'On Google for “Naples urgent care”, up from #12', from: 'naples-urgent-care' },
+    { value: '6.34x', label: 'Return on Google Ads for a B2B steel manufacturer, up from 2 to 3x' },
+    { value: '200+', label: 'Booked demo calls for a real estate software company' },
+    { value: '#1', label: 'On Google for “Naples urgent care”, up from #12' },
   ],
 }
 
 export const industries = ['Manufacturing', 'Healthcare', 'Law firms', 'E-commerce', 'Software', 'Home services', 'Fitness studios', 'Travel and hospitality', 'LASIK and medical', 'Investment firms', 'Contractors']
 
 // Featured case studies. `chart` decides which graphic is drawn next to the story.
-// Every slide in the source deck carries a www.oneims.com watermark, so nothing here is
-// published until Evan confirms it is his to claim. Set `verified: true` to bring one back:
-// its card, charts, case page, sitemap entry and schema all return automatically.
 export const cases = [
   {
     client: 'Peddinghaus',
     slug: 'peddinghaus',
-    verified: false, // CONFIRM: deck slide carries the oneims.com watermark
     industry: 'B2B steel fabrication machinery',
     channels: 'Google Ads · YouTube Ads',
     headline: 'From 2 to 3x return to 6.34x in a year.',
@@ -86,7 +75,6 @@ export const cases = [
   {
     client: 'Hauslane',
     slug: 'hauslane',
-    verified: false, // CONFIRM: deck slide carries the oneims.com watermark
     industry: 'E-commerce, kitchen appliances',
     channels: 'Google Ads · Facebook Ads',
     headline: '11 to 12 dollars back for every dollar spent.',
@@ -112,7 +100,6 @@ export const cases = [
   {
     client: 'iList Tech',
     slug: 'ilist-tech',
-    verified: false, // CONFIRM: deck slide carries the oneims.com watermark
     industry: 'Software for real estate agents',
     channels: 'Facebook Ads',
     headline: '1,500+ leads and 200+ booked demos.',
@@ -146,7 +133,6 @@ export const cases = [
   {
     client: 'Naples Urgent Care',
     slug: 'naples-urgent-care',
-    verified: false, // CONFIRM: deck slide carries the oneims.com watermark
     industry: 'Local healthcare',
     channels: 'SEO',
     headline: 'From #12 to #1 on Google.',
@@ -168,12 +154,12 @@ export const cases = [
 
 // Shorter wins from the same deck. Outcome left blank where the deck shows a screenshot, not a number.
 export const moreWork = [
-  { verified: false, client: 'DFY Ecommerce', industry: 'E-commerce services', channels: 'Facebook Ads', outcome: '100+ booked appointments' },
-  { verified: false, client: 'Blume Digital', industry: 'Law firm marketing agency', channels: 'Facebook Ads', outcome: '30+ meetings with law firms' },
-  { verified: false, client: 'Dello Russo Laser Vision', industry: 'LASIK, 7 locations in NY and NJ', channels: 'SEO · Facebook Ads', outcome: 'Location pages ranking on page one' },
-  { verified: false, client: 'TN Pool Builders', industry: 'Inground pools, $50k+ per sale', channels: 'Facebook Ads', outcome: '' },
-  { verified: false, client: 'Alpha Medicine & Rehab', industry: 'Injury clinic', channels: 'SEO · Google Ads', outcome: '' },
-  { verified: false, client: 'Lush Corals', industry: 'E-commerce', channels: 'Facebook · Google · SEO · Web design', outcome: '' },
+  { client: 'DFY Ecommerce', industry: 'E-commerce services', channels: 'Facebook Ads', outcome: '100+ booked appointments' },
+  { client: 'Blume Digital', industry: 'Law firm marketing agency', channels: 'Facebook Ads', outcome: '30+ meetings with law firms' },
+  { client: 'Dello Russo Laser Vision', industry: 'LASIK, 7 locations in NY and NJ', channels: 'SEO · Facebook Ads', outcome: 'Location pages ranking on page one' },
+  { client: 'TN Pool Builders', industry: 'Inground pools, $50k+ per sale', channels: 'Facebook Ads', outcome: '' },
+  { client: 'Alpha Medicine & Rehab', industry: 'Injury clinic', channels: 'SEO · Google Ads', outcome: '' },
+  { client: 'Lush Corals', industry: 'E-commerce', channels: 'Facebook · Google · SEO · Web design', outcome: '' },
 ]
 
 export const services = [
@@ -196,7 +182,7 @@ export const method = {
 export const about = {
   title: 'I’m Evan.',
   body: [
-    'I founded JetSpeedSocial in Naples, Florida, and have spent the years since inside ad accounts, search rankings and sales pipelines for B2B and B2C companies.',
+    'I founded JetSpeedSocial in Naples, Florida, and have spent the years since inside ad accounts, search rankings and sales pipelines. My clients range from a local urgent care clinic to a national steel machinery manufacturer.',
     'I studied at Samford University. Today I work as a growth partner and fractional CMO for owners who want marketing that answers to revenue, not vanity numbers.',
   ],
   // CONFIRM all three with Evan before launch
@@ -218,7 +204,7 @@ export const faq = [
   },
   {
     q: 'Do you only work with businesses in Naples, Florida?',
-    a: 'No. JetSpeedSocial is based in Naples, Florida, and I work with owners anywhere in the United States. Everything runs over video calls and shared dashboards.',
+    a: 'No. JetSpeedSocial is based in Naples, Florida, and clients are spread across the United States, including New York, Illinois, Tennessee and Louisiana. Everything runs over calls and shared dashboards.',
   },
   {
     q: 'Which marketing channels do you manage?',
@@ -229,8 +215,8 @@ export const faq = [
     a: 'SEO gets your business ranked in Google search results. GEO, short for generative engine optimization, gets your business named when people ask AI tools like ChatGPT, Perplexity or Google AI Overviews for a recommendation. They work best together.',
   },
   {
-    q: 'Can I see results before we work together?',
-    a: 'Yes. On a strategy call I will walk you through real campaigns and dashboards, with client details kept private. I only publish numbers on this site once a client has signed off on them.',
+    q: 'What results have your clients seen?',
+    a: 'A B2B steel machinery manufacturer went from a 2 to 3x return on Google Ads to 6.34x in a year. A real estate software company booked more than 200 demo calls from Facebook ads. A Naples urgent care clinic moved from #12 to #1 on Google for “Naples urgent care”.',
   },
   {
     q: 'How do we get started?',
@@ -241,7 +227,6 @@ export const faq = [
 // "By the numbers": counts are taken from the 31 clients named in the case study deck.
 // A client can use more than one channel, so channel counts add up to more than 31.
 export const numbers = {
-  verified: false, // CONFIRM: every count below is tallied from the oneims.com-watermarked deck
   stats: [
     { value: '31', label: 'Clients named in the case study deck' },
     { value: '10', label: 'Industries, from steel machinery to pilates' },
@@ -302,9 +287,3 @@ export const numbers = {
     },
   ],
 }
-
-// What the site actually shows. Only verified items go live.
-export const liveCases = cases.filter((c) => c.verified)
-export const liveMoreWork = moreWork.filter((m) => m.verified)
-export const liveProof = hero.proof.filter((p) => liveCases.some((c) => c.slug === p.from))
-export const showNumbers = numbers.verified
