@@ -145,6 +145,11 @@ if (!reduced) {
     gsap.from(el, { y: 30, autoAlpha: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } })
   )
 
+  // headline stats count up
+  gsap.utils.toArray('.stat-row').forEach((row) => {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: row, start: 'top 85%' } })
+    row.querySelectorAll('strong').forEach((el, i) => countUp(el, tl, i * 0.1))
+  })
   // case study metrics count up
   gsap.utils.toArray('.metrics').forEach((m) => {
     const tl = gsap.timeline({ scrollTrigger: { trigger: m, start: 'top 88%' } })
@@ -157,6 +162,11 @@ if (!reduced) {
     tl.from(card, { clipPath: 'inset(0 0 100% 0 round 16px)', duration: 1, ease: 'power3.inOut' })
     card.querySelectorAll('.f-bar').forEach((b) => { b.style.transformBox = 'fill-box'; b.style.transformOrigin = 'center' })
     tl.from(card.querySelectorAll('.bar, .f-bar'), { scaleX: 0, transformOrigin: 'left center', duration: 1.1, stagger: 0.12, ease: 'power3.out' }, 0.4)
+    card.querySelectorAll('.col').forEach((c) => { c.style.transformBox = 'fill-box'; c.style.transformOrigin = 'bottom' })
+    tl.from(card.querySelectorAll('.col'), { scaleY: 0, duration: 1.1, stagger: 0.1, ease: 'power3.out' }, 0.4)
+    const ringFg = card.querySelector('.ring-fg')
+    if (ringFg) tl.fromTo(ringFg, { strokeDashoffset: getComputedStyle(ringFg).getPropertyValue('--c') }, { strokeDashoffset: getComputedStyle(ringFg).getPropertyValue('--o'), duration: 1.6, ease: 'power2.inOut' }, 0.4)
+    card.querySelectorAll('.ring-key dd').forEach((dd) => countUp(dd, tl, 0.4))
     tl.from(card.querySelectorAll('.val, .ref, .ref-lbl, .leak-lbl'), { autoAlpha: 0, duration: 0.5, stagger: 0.06 }, '-=0.5')
     const slope = card.querySelector('.slope')
     if (slope) {

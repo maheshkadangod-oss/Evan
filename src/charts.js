@@ -56,8 +56,65 @@ function tiles(ch) {
       <div class="tile"><strong data-count="${t.value}" data-suffix="${esc(t.suffix || '')}">${t.value.toLocaleString('en-US')}${esc(t.suffix || '')}</strong><span>${esc(t.label)}</span></div>`).join('')}</div>`
 }
 
+// Compact ranked bars: label, bar, value. Built in HTML so the text stays readable on phones.
+function list(ch) {
+  const max = ch.max || Math.max(...ch.rows.map((r) => r.value))
+  const rows = ch.rows.map((r) => `
+      <div class="lrow" data-tip="${esc(r.label)}: ${esc(r.display || r.value)}">
+        <span class="llbl">${esc(r.label)}</span>
+        <span class="ltrack"><b class="bar ${r.highlight === false ? 'base' : 'hi'}" style="--w:${(r.value / max).toFixed(3)}"></b><em>${esc(r.display || r.value)}</em></span>
+      </div>`)
+  return `<div class="chart chart-list" role="img" aria-label="${esc(ch.title)}">${rows.join('')}</div>
+    ${srTable(ch.rows.map((r) => [r.label, r.display || r.value]), ['Item', ch.valueName || 'Value'])}`
+}
+
+// Paired columns: two measures per period, side by side, same dollar scale.
+function columns(ch) {
+  const W = 520, H = 300, padB = 46, padT = 30, gap = 6
+  const max = Math.max(...ch.groups.flatMap((g) => g.values.map((v) => v.value)))
+  const y = (v) => (v / max) * (H - padT - padB)
+  const groupW = (W - 40) / ch.groups.length
+  const colW = Math.min(64, (groupW - 60) / 2)
+  const cols = ch.groups.map((g, gi) => {
+    const gx = 20 + gi * groupW + (groupW - (colW * 2 + gap)) / 2
+    const bars = g.values.map((v, vi) => {
+      const h = Math.max(y(v.value), 3)
+      const x = gx + vi * (colW + gap)
+      const top = H - padB - h
+      return `<g data-tip="${esc(g.label)} · ${esc(ch.series[vi])}: ${esc(v.display)}">
+          <rect class="hit" x="${x - 4}" y="${padT}" width="${colW + 8}" height="${H - padT - padB}" fill="transparent"/>
+          <path class="col ${vi ? 'hi' : 'base'}" d="M${x} ${H - padB} v-${h - 4} a4 4 0 0 1 4 -4 h${colW - 8} a4 4 0 0 1 4 4 v${h - 4} z"/>
+          <text class="val" x="${x + colW / 2}" y="${top - 10}" text-anchor="middle">${esc(v.display)}</text>
+        </g>`
+    })
+    return `${bars.join('')}<text class="lbl" x="${gx + colW + gap / 2}" y="${H - padB + 26}" text-anchor="middle">${esc(g.label)}</text>`
+  })
+  const legend = ch.series.map((name, i) => `<span class="lg"><b class="${i ? 'hi' : 'base'}"></b>${esc(name)}</span>`).join('')
+  return `<div class="legend">${legend}</div>
+    <svg viewBox="0 0 ${W} ${H}" class="chart chart-cols" role="img" aria-label="${esc(ch.title)}">
+      <line class="grid" x1="0" x2="${W}" y1="${H - padB}" y2="${H - padB}"/>${cols.join('')}
+    </svg>
+    ${srTable(ch.groups.map((g) => [g.label, ...g.values.map((v) => v.display)]), ['Period', ...ch.series])}`
+}
+
+// One share of a whole, as a ring with the number in the middle.
+function ring(ch) {
+  const R = 78, C = 2 * Math.PI * R
+  const pct = ch.part / ch.whole
+  return `<div class="ring-wrap">
+      <svg viewBox="0 0 200 200" class="chart chart-ring" role="img" aria-label="${esc(ch.title)}">
+        <circle class="ring-bg" cx="100" cy="100" r="${R}"/>
+        <circle class="ring-fg" cx="100" cy="100" r="${R}" style="--c:${C.toFixed(1)};--o:${(C * (1 - pct)).toFixed(1)}" transform="rotate(-90 100 100)"/>
+        <text class="ring-num" x="100" y="104" text-anchor="middle">${esc(ch.center)}</text>
+        <text class="ring-sub" x="100" y="128" text-anchor="middle">${esc(ch.centerSub || '')}</text>
+      </svg>
+      <dl class="ring-key"><div><dt>${esc(ch.wholeLabel)}</dt><dd>${esc(ch.wholeDisplay)}</dd></div><div><dt>${esc(ch.partLabel)}</dt><dd>${esc(ch.partDisplay)}</dd></div></dl>
+    </div>
+    ${srTable([[ch.wholeLabel, ch.wholeDisplay], [ch.partLabel, ch.partDisplay]], ['Measure', 'Count'])}`
+}
+
 export function renderChart(ch) {
-  const body = ch.type === 'bars' ? bars(ch) : ch.type === 'rank' ? rank(ch) : tiles(ch)
+  const body = { bars, rank, tiles, list, columns, ring }[ch.type](ch)
   return `<figure class="chart-card">
       <figcaption><span class="chart-title">${esc(ch.title)}</span></figcaption>
       ${body}

@@ -61,6 +61,16 @@ export const cases = [
         { label: 'After one year', value: 6.34, display: '6.34x', highlight: true },
       ],
     },
+    extra: {
+      type: 'columns',
+      title: 'Ad spend vs. conversion value',
+      note: 'Same dollar scale for both. Full year value is about $1M.',
+      series: ['Ad spend', 'Conversion value'],
+      groups: [
+        { label: 'First stretch', values: [{ value: 72, display: '$72k' }, { value: 457, display: '$457k' }] },
+        { label: 'Full year', values: [{ value: 400, display: '$400k' }, { value: 1000, display: '~$1M' }] },
+      ],
+    },
   },
   {
     client: 'Hauslane',
@@ -105,6 +115,19 @@ export const cases = [
         { value: 1500, suffix: '+', label: 'Leads to the demo page' },
         { value: 200, suffix: '+', label: 'Meetings booked on the calendar' },
       ],
+    },
+    extra: {
+      type: 'ring',
+      title: 'Share of leads that booked a demo',
+      note: 'Both figures are floors, so the rate is approximate.',
+      part: 200,
+      whole: 1500,
+      center: '~13%',
+      centerSub: 'about 1 in 7',
+      wholeLabel: 'Leads',
+      wholeDisplay: '1,500+',
+      partLabel: 'Booked demos',
+      partDisplay: '200+',
     },
   },
   {
@@ -200,3 +223,67 @@ export const faq = [
     a: 'Book a strategy call at jetspeedsocial.com/contact or call (239) 877-2927. Bring access to your ad and analytics accounts if you can, and I will show you where the money is going and what I would fix first.',
   },
 ]
+
+// "By the numbers": counts are taken from the 31 clients named in the case study deck.
+// A client can use more than one channel, so channel counts add up to more than 31.
+export const numbers = {
+  stats: [
+    { value: '31', label: 'Clients named in the case study deck' },
+    { value: '10', label: 'Industries, from steel machinery to pilates' },
+    { value: '330+', label: 'Sales meetings booked from three ad campaigns' },
+    { value: '28x', label: 'Best single campaign return on ad spend' },
+  ],
+  charts: [
+    {
+      type: 'list',
+      title: 'Sales meetings booked from Facebook ads',
+      note: 'Each figure is a floor: the deck reports them as 200+, 100+ and 30+.',
+      valueName: 'Meetings booked',
+      rows: [
+        { label: 'iList Tech', value: 200, display: '200+' },
+        { label: 'DFY Ecommerce', value: 100, display: '100+' },
+        { label: 'Blume Digital', value: 30, display: '30+' },
+      ],
+    },
+    {
+      type: 'columns',
+      title: 'Peddinghaus: ad spend vs. conversion value',
+      note: 'Same dollar scale for both. Full year value is about $1M.',
+      series: ['Ad spend', 'Conversion value'],
+      groups: [
+        { label: 'First stretch', values: [{ value: 72, display: '$72k' }, { value: 457, display: '$457k' }] },
+        { label: 'Full year', values: [{ value: 400, display: '$400k' }, { value: 1000, display: '~$1M' }] },
+      ],
+    },
+    {
+      type: 'list',
+      title: 'Clients by industry',
+      note: '31 clients in the case study deck.',
+      valueName: 'Clients',
+      rows: [
+        { label: 'Healthcare and medical', value: 5 },
+        { label: 'E-commerce', value: 5 },
+        { label: 'Home services', value: 5 },
+        { label: 'Software and agencies', value: 5 },
+        { label: 'Law firms', value: 2 },
+        { label: 'Manufacturing', value: 2 },
+        { label: 'Travel and hospitality', value: 2 },
+        { label: 'Fitness studios', value: 2 },
+        { label: 'Online courses', value: 2 },
+        { label: 'Investment firms', value: 1 },
+      ],
+    },
+    {
+      type: 'list',
+      title: 'Channels behind the results',
+      note: 'Number of deck clients using each channel. Many use more than one.',
+      valueName: 'Clients',
+      rows: [
+        { label: 'Facebook and Instagram ads', value: 21 },
+        { label: 'SEO', value: 10 },
+        { label: 'Google Ads', value: 4 },
+        { label: 'YouTube Ads', value: 2 },
+      ],
+    },
+  ],
+}

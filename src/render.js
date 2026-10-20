@@ -2,12 +2,13 @@
 // engines and AI crawlers get the full content without running any JavaScript.
 import { renderChart, funnelSvg } from './charts.js'
 import { mapSize, nationPath, statesPath, places } from './us-map.js'
-import { site, hero, industries, cases, moreWork, services, method, about, cta, faq } from './content.js'
+import { site, hero, industries, cases, moreWork, services, method, about, cta, faq, numbers } from './content.js'
 
 const ext = 'target="_blank" rel="noopener"'
 const year = new Date().getFullYear()
 
 export const sections = [
+  ['numbers', 'Numbers'],
   ['work', 'Work'],
   ['method', 'Method'],
   ['services', 'Services'],
@@ -77,7 +78,7 @@ export function renderHome() {
   <div class="hero-grid">
     <div class="hero-copy">
       <p class="eyebrow rv">${hero.eyebrow}</p>
-      <h1>${hero.lines.map((l) => `<span class="line"><span>${l}</span></span>`).join(' ')}</h1>
+      <h1>${hero.lines.map((l, i, all) => i === all.length - 1 ? `<span class="line"><span>${l.replace(/\.$/, '')}</span><span class="dot">.</span></span>` : `<span class="line"><span>${l}</span></span>`).join(' ')}</h1>
       <p class="lead rv">${hero.sub}</p>
       <div class="btns rv">
         <a class="btn primary" href="${site.bookLink}" ${ext}>${hero.primary}<i aria-hidden="true">→</i></a>
@@ -102,6 +103,16 @@ export function renderHome() {
 <section class="industries" aria-label="Industries served">
   <p class="kicker">Industries I’ve grown</p>
   <div class="ind-track">${[...industries, ...industries].map((x, i) => `<span${i >= industries.length ? ' aria-hidden="true"' : ''}>${x}</span>`).join('')}</div>
+</section>
+
+<section class="numbers" id="numbers">
+  <header class="sec-head">
+    <p class="kicker">By the numbers</p>
+    <h2 class="sw">${words('The work, counted.')}</h2>
+    <p class="sec-sub rv">Pulled from the case study deck. Hover or tap a bar for its value.</p>
+  </header>
+  <ul class="stat-row" data-carousel>${numbers.stats.map((st) => `<li class="rv"><strong>${st.value}</strong><span>${st.label}</span></li>`).join('')}</ul>
+  <div class="dash">${numbers.charts.map((ch) => renderChart(ch)).join('')}</div>
 </section>
 
 <section class="work" id="work">
@@ -191,7 +202,7 @@ export function renderHome() {
 
 <section class="cta" id="contact">
   <p class="kicker rv">Next step</p>
-  <h2>${cta.title.map((t) => `<span class="line"><span>${t}</span></span>`).join(' ')}</h2>
+  <h2>${cta.title.map((t, i, all) => i === all.length - 1 ? `<span class="line"><span>${t.replace(/\.$/, '')}</span><span class="dot">.</span></span>` : `<span class="line"><span>${t}</span></span>`).join(' ')}</h2>
   <p class="lead rv">${cta.body}</p>
   <div class="btns rv">
     <a class="btn primary" href="${site.bookLink}" ${ext}>Book a strategy call<i aria-hidden="true">→</i></a>
@@ -218,7 +229,7 @@ export function renderCase(c) {
     <p class="lead">${c.summary}</p>
   </header>
   <dl class="metrics big">${c.metrics.map((m) => `<div><dt>${m.label}</dt><dd>${m.value}</dd></div>`).join('')}</dl>
-  <div class="cp-chart">${renderChart(c.chart)}</div>
+  <div class="cp-charts${c.extra ? ' two' : ''}">${renderChart(c.chart)}${c.extra ? renderChart(c.extra) : ''}</div>
   <div class="cp-next">
     <a class="btn primary" href="${site.bookLink}" ${ext}>Get a plan like this for your business<i aria-hidden="true">→</i></a>
     <a class="next-case" href="/work/${next.slug}/"><small>Next case study</small>${next.client}: ${next.headline}</a>
