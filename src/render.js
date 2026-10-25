@@ -101,7 +101,7 @@ export function renderHome() {
 </section>
 
 <section class="industries" aria-label="Industries served">
-  <p class="kicker">Industries I’ve grown</p>
+  <p class="kicker">Industries I’ve helped grow</p>
   <div class="ind-track">${[...industries, ...industries].map((x, i) => `<span${i >= industries.length ? ' aria-hidden="true"' : ''}>${x}</span>`).join('')}</div>
 </section>
 
@@ -109,7 +109,7 @@ export function renderHome() {
   <header class="sec-head">
     <p class="kicker">By the numbers</p>
     <h2 class="sw">${words('The work, counted.')}</h2>
-    <p class="sec-sub rv">Pulled from the case study deck. Hover or tap a bar for its value.</p>
+    <p class="sec-sub rv">Counted across the clients in my case studies. Tap any bar to see its value.</p>
   </header>
   <ul class="stat-row">${numbers.stats.map((st) => `<li class="rv"><strong>${st.value}</strong><span>${st.label}</span></li>`).join('')}</ul>
   <div class="dash-pin"><div class="dash">${numbers.charts.map((ch) => renderChart(ch)).join('')}</div></div>
@@ -157,7 +157,7 @@ export function renderHome() {
     <div class="from-left">
       <p class="kicker">Based in Southwest Florida</p>
       <h2 class="sw">${words('Naples to New York, and coast to coast.')}</h2>
-      <p class="sec-sub">A sample of where clients in the case study deck are based.</p>
+      <p class="sec-sub">A few of the places my clients call home.</p>
       <ul class="places">${places.map((p, i) => `<li class="rv" data-place="${i}"><b>${p.city}${p.hq ? ' <em>home base</em>' : ''}</b><span>${p.clients.join(', ')}</span></li>`).join('')}</ul>
     </div>
     <figure class="map from-right">

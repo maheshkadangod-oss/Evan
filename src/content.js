@@ -23,13 +23,13 @@ export const site = {
 export const hero = {
   eyebrow: 'Growth partner · Fractional CMO · Naples, Florida',
   lines: ['Growth that', 'pays for itself.'],
-  sub: 'I build the ads, search and sales systems that turn marketing spend into revenue you can plan around. B2B and B2C, from six figures to eight.',
+  sub: 'I build the ads, search, and sales systems that turn marketing spend into revenue you can plan around. For B2B and B2C companies growing from six figures to eight.',
   primary: 'Book a strategy call',
   secondary: 'See the results',
   proof: [
     { value: '6.34x', label: 'Return on Google Ads for a B2B steel manufacturer, up from 2 to 3x' },
     { value: '200+', label: 'Booked demo calls for a real estate software company' },
-    { value: '#1', label: 'On Google for “Naples urgent care”, up from #12' },
+    { value: '#1', label: 'On Google for “Naples urgent care,” up from #12' },
   ],
 }
 
@@ -52,7 +52,7 @@ export const cases = [
     chart: {
       type: 'bars',
       title: 'Return on ad spend, Google Ads',
-      note: 'Before is the 2 to 3x range the account ran at. Dashed line is break-even.',
+      note: 'Before: the account ran at 2 to 3x. The dashed line is break-even.',
       unit: 'x',
       max: 7,
       breakEven: 1,
@@ -67,7 +67,7 @@ export const cases = [
       note: 'Same dollar scale for both. Full year value is about $1M.',
       series: ['Ad spend', 'Conversion value'],
       groups: [
-        { label: 'First stretch', values: [{ value: 72, display: '$72k' }, { value: 457, display: '$457k' }] },
+        { label: 'Early results', values: [{ value: 72, display: '$72k' }, { value: 457, display: '$457k' }] },
         { label: 'Full year', values: [{ value: 400, display: '$400k' }, { value: 1000, display: '~$1M' }] },
       ],
     },
@@ -77,8 +77,8 @@ export const cases = [
     slug: 'hauslane',
     industry: 'E-commerce, kitchen appliances',
     channels: 'Google Ads · Facebook Ads',
-    headline: '11 to 12 dollars back for every dollar spent.',
-    summary: 'Hauslane sells kitchen appliances online. We ran Google and Facebook ads side by side and kept the budget on what sold. The account returns 11 to 12x a month, and the strongest campaigns run at 19x and 28x.',
+    headline: '$11 to $12 back for every $1 spent.',
+    summary: 'Hauslane sells kitchen appliances online. We ran Google and Facebook ads side by side and put the budget behind what sold. The account returns 11 to 12x a month, and the strongest campaigns run at 19x and 28x.',
     metrics: [
       { value: '11 to 12x', label: 'Monthly return on ad spend' },
       { value: '28x', label: 'Best campaign' },
@@ -86,7 +86,7 @@ export const cases = [
     chart: {
       type: 'bars',
       title: 'Return on ad spend by level',
-      note: 'Monthly figure is the account average. Dashed line is break-even.',
+      note: 'The monthly figure is the account average. The dashed line is break-even.',
       unit: 'x',
       max: 30,
       breakEven: 1,
@@ -103,7 +103,7 @@ export const cases = [
     industry: 'Software for real estate agents',
     channels: 'Facebook Ads',
     headline: '1,500+ leads and 200+ booked demos.',
-    summary: 'A software company selling to real estate agents needed sales conversations, not likes. We built Facebook campaigns that sent agents straight to a book-a-demo page, and the calendar filled.',
+    summary: 'A software company selling to real estate agents needed sales conversations, not likes. We built Facebook campaigns that sent agents straight to a book-a-demo page, and the calendar filled up.',
     metrics: [
       { value: '1,500+', label: 'Leads' },
       { value: '200+', label: 'Booked meetings' },
@@ -119,7 +119,7 @@ export const cases = [
     extra: {
       type: 'ring',
       title: 'Share of leads that booked a demo',
-      note: 'Both figures are floors, so the rate is approximate.',
+      note: 'Both numbers are minimums, so the rate is approximate.',
       part: 200,
       whole: 1500,
       center: '~13%',
@@ -136,7 +136,7 @@ export const cases = [
     industry: 'Local healthcare',
     channels: 'SEO',
     headline: 'From #12 to #1 on Google.',
-    summary: 'When someone nearby needs care today, the first result gets the visit. We worked the clinic’s search presence until it moved from twelfth place to the top spot for “Naples urgent care”.',
+    summary: 'When someone nearby needs care today, the first result gets the visit. We worked on the clinic’s local SEO until it climbed from #12 to the top spot for “Naples urgent care.”',
     metrics: [
       { value: '#1', label: 'Google ranking now' },
       { value: '#12', label: 'Where it started' },
@@ -144,7 +144,7 @@ export const cases = [
     chart: {
       type: 'rank',
       title: 'Google position for “Naples urgent care”',
-      note: 'Lower is better. Position 1 is the top result.',
+      note: 'Lower is better. Position #1 is the top result.',
       from: { label: 'Start', value: 12 },
       to: { label: 'Now', value: 1 },
       worst: 12,
@@ -157,33 +157,33 @@ export const moreWork = [
   { client: 'DFY Ecommerce', industry: 'E-commerce services', channels: 'Facebook Ads', outcome: '100+ booked appointments' },
   { client: 'Blume Digital', industry: 'Law firm marketing agency', channels: 'Facebook Ads', outcome: '30+ meetings with law firms' },
   { client: 'Dello Russo Laser Vision', industry: 'LASIK, 7 locations in NY and NJ', channels: 'SEO · Facebook Ads', outcome: 'Location pages ranking on page one' },
-  { client: 'TN Pool Builders', industry: 'Inground pools, $50k+ per sale', channels: 'Facebook Ads', outcome: '' },
+  { client: 'TN Pool Builders', industry: 'In-ground pools, $50k+ per sale', channels: 'Facebook Ads', outcome: '' },
   { client: 'Alpha Medicine & Rehab', industry: 'Injury clinic', channels: 'SEO · Google Ads', outcome: '' },
   { client: 'Lush Corals', industry: 'E-commerce', channels: 'Facebook · Google · SEO · Web design', outcome: '' },
 ]
 
 export const services = [
-  { name: 'Paid search and social', body: 'Google, YouTube, Facebook and Instagram ads, tracked all the way to revenue so you know what each dollar returned.' },
-  { name: 'SEO and GEO', body: 'Rank on Google for the searches that bring buyers, and show up when people ask AI tools for a recommendation.' },
-  { name: 'Websites that convert', body: 'Design and development built around one action: the call, the booking, the sale.' },
-  { name: 'Social media', body: 'Content that keeps you in front of the people who already know you, so they buy when they are ready.' },
-  { name: 'Brand and creative', body: 'Identity, ad creative and landing pages that look like the business you are becoming.' },
+  { name: 'Paid search and social', body: 'Google, YouTube, Facebook, and Instagram ads, tracked all the way to revenue, so you know what every dollar brought back.' },
+  { name: 'SEO and GEO', body: 'Rank on Google for the searches that bring in buyers, and show up when people ask AI tools for a recommendation.' },
+  { name: 'Websites that convert', body: 'Design and development built around one action: the call, the booking, or the sale.' },
+  { name: 'Social media', body: 'Content that keeps you in front of people who already know you, so they buy from you when they’re ready.' },
+  { name: 'Brand and creative', body: 'Identity, ad creative, and landing pages that look like the company you’re growing into.' },
 ]
 
 export const method = {
   title: 'How I scale a business',
   steps: [
-    { n: '01', name: 'Find the leak', body: 'Before more money goes into ads, I look at the whole path: the ad, the page, the follow-up, the close. Most businesses lose more after the click than before it.' },
-    { n: '02', name: 'Fix the constraint', body: 'One fix at a time, measured. The thing that holds revenue back the most goes first.' },
-    { n: '03', name: 'Add fuel', body: 'Budget goes up only when the numbers show a dollar in brings more than a dollar back. That is what scaling efficiently means.' },
+    { n: '01', name: 'Find the leak', body: 'Before another dollar goes into ads, I look at the whole path: the ad, the page, the follow-up, and the close. Most businesses lose more money after the click than before it.' },
+    { n: '02', name: 'Fix the bottleneck', body: 'One fix at a time, and every one gets measured. Whatever is holding revenue back the most gets fixed first.' },
+    { n: '03', name: 'Step on the gas', body: 'The budget goes up only when the numbers show every dollar in brings more than a dollar back. That’s what scaling efficiently means.' },
   ],
 }
 
 export const about = {
   title: 'I’m Evan.',
   body: [
-    'I founded JetSpeedSocial in Naples, Florida, and have spent the years since inside ad accounts, search rankings and sales pipelines. My clients range from a local urgent care clinic to a national steel machinery manufacturer.',
-    'I studied at Samford University. Today I work as a growth partner and fractional CMO for owners who want marketing that answers to revenue, not vanity numbers.',
+    'I founded JetSpeedSocial in Naples, Florida, and I’ve spent the years since inside ad accounts, search rankings, and sales pipelines. My clients range from a local urgent care clinic to a national steel machinery manufacturer.',
+    'I studied at Samford University. Today I work as a growth partner and fractional CMO for owners who want marketing that answers to revenue, not vanity metrics.',
   ],
   // CONFIRM all three with Evan before launch
   creds: ['Google Premier Partner agency', 'ClickFunnels Two Comma Club', 'Samford University'],
@@ -191,8 +191,8 @@ export const about = {
 
 export const cta = {
   title: ['Let’s look at', 'your numbers.'],
-  body: 'Book a call. Bring your ad accounts and your goals, and I’ll tell you plainly where the money is leaking and what I would fix first.',
-  dm: 'Prefer Facebook? Message me “MDA”.',
+  body: 'Book a call. Bring your ad accounts and your goals, and I’ll tell you straight where the money is leaking and what I’d fix first.',
+  dm: 'Prefer Facebook? Message me “MDA.”',
 }
 
 // Answers written for people and for answer engines (Google AI Overviews, ChatGPT, Perplexity).
@@ -200,15 +200,15 @@ export const cta = {
 export const faq = [
   {
     q: 'What does a fractional CMO do?',
-    a: 'A fractional CMO runs your marketing strategy part time, for a monthly fee instead of a full executive salary. I set the plan, manage the channels and the people running them, and report on one thing: revenue the marketing brought in.',
+    a: 'A fractional CMO runs your marketing part-time, for a monthly fee instead of a full-time executive salary. I set the plan, manage the channels and the people running them, and report on one thing: the revenue your marketing brought in.',
   },
   {
     q: 'Do you only work with businesses in Naples, Florida?',
-    a: 'No. JetSpeedSocial is based in Naples, Florida, and clients are spread across the United States, including New York, Illinois, Tennessee and Louisiana. Everything runs over calls and shared dashboards.',
+    a: 'No. JetSpeedSocial is based in Naples, Florida, and my clients are spread across the U.S., including New York, Illinois, Tennessee, and Louisiana. Everything runs over video calls and shared dashboards.',
   },
   {
     q: 'Which marketing channels do you manage?',
-    a: 'Google Ads, YouTube Ads, Facebook and Instagram ads, SEO, GEO, websites, social media and brand creative. Most clients use two or three of these together, picked by where their buyers already are.',
+    a: 'Google Ads, YouTube Ads, Facebook and Instagram ads, SEO, GEO, websites, social media, and brand creative. Most clients use two or three together, picked based on where their buyers already spend time.',
   },
   {
     q: 'What is GEO, and how is it different from SEO?',
@@ -216,11 +216,11 @@ export const faq = [
   },
   {
     q: 'What results have your clients seen?',
-    a: 'A B2B steel machinery manufacturer went from a 2 to 3x return on Google Ads to 6.34x in a year. A real estate software company booked more than 200 demo calls from Facebook ads. A Naples urgent care clinic moved from #12 to #1 on Google for “Naples urgent care”.',
+    a: 'A B2B steel machinery manufacturer went from a 2 to 3x return on Google Ads to 6.34x in a year. A real estate software company booked more than 200 demo calls from Facebook ads. A Naples urgent care clinic climbed from #12 to #1 on Google for “Naples urgent care.”',
   },
   {
     q: 'How do we get started?',
-    a: 'Book a strategy call at jetspeedsocial.com/contact or call (239) 877-2927. Bring access to your ad and analytics accounts if you can, and I will show you where the money is going and what I would fix first.',
+    a: 'Book a strategy call at jetspeedsocial.com/contact or call (239) 877-2927. Bring access to your ad and analytics accounts if you can, and I’ll show you where the money is going and what I’d fix first.',
   },
 ]
 
@@ -228,8 +228,8 @@ export const faq = [
 // A client can use more than one channel, so channel counts add up to more than 31.
 export const numbers = {
   stats: [
-    { value: '31', label: 'Clients named in the case study deck' },
-    { value: '10', label: 'Industries, from steel machinery to pilates' },
+    { value: '31', label: 'Clients across my case studies' },
+    { value: '10', label: 'Industries, from steel machinery to Pilates' },
     { value: '330+', label: 'Sales meetings booked from three ad campaigns' },
     { value: '28x', label: 'Best single campaign return on ad spend' },
   ],
@@ -237,7 +237,7 @@ export const numbers = {
     {
       type: 'list',
       title: 'Sales meetings booked from Facebook ads',
-      note: 'Each figure is a floor: the deck reports them as 200+, 100+ and 30+.',
+      note: 'Each number is a minimum: 200+, 100+, and 30+.',
       valueName: 'Meetings booked',
       rows: [
         { label: 'iList Tech', value: 200, display: '200+' },
@@ -251,14 +251,14 @@ export const numbers = {
       note: 'Same dollar scale for both. Full year value is about $1M.',
       series: ['Ad spend', 'Conversion value'],
       groups: [
-        { label: 'First stretch', values: [{ value: 72, display: '$72k' }, { value: 457, display: '$457k' }] },
+        { label: 'Early results', values: [{ value: 72, display: '$72k' }, { value: 457, display: '$457k' }] },
         { label: 'Full year', values: [{ value: 400, display: '$400k' }, { value: 1000, display: '~$1M' }] },
       ],
     },
     {
       type: 'list',
       title: 'Clients by industry',
-      note: '31 clients in the case study deck.',
+      note: 'Across 31 clients.',
       valueName: 'Clients',
       rows: [
         { label: 'Healthcare and medical', value: 5 },
@@ -276,7 +276,7 @@ export const numbers = {
     {
       type: 'list',
       title: 'Channels behind the results',
-      note: 'Number of deck clients using each channel. Many use more than one.',
+      note: 'How many of those 31 clients used each channel. Many used more than one.',
       valueName: 'Clients',
       rows: [
         { label: 'Facebook and Instagram ads', value: 21 },
