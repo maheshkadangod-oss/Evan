@@ -6,6 +6,7 @@ import { prepare, decode } from './scramble.js'
 
 // Page HTML is pre-rendered at build time (src/render.js). This file only adds motion and the header.
 gsap.registerPlugin(ScrollTrigger)
+ScrollTrigger.config({ ignoreMobileResize: true }) // the phone address bar showing and hiding should not jolt pinned sections
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const mm = gsap.matchMedia()
 const DESK = '(min-width: 961px)'
@@ -224,12 +225,58 @@ if (!reduced) {
   })
 
   mm.add(MOB, () => {
-    // on phones everything rises in; no sideways travel that can jitter the page
+    // same feel as desktop: words and visuals arrive from opposite sides (sections clip the overflow)
     gsap.utils.toArray('.from-left, .from-right').forEach((el) =>
-      gsap.from(el, { y: 40, autoAlpha: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } })
+      gsap.from(el, { x: el.classList.contains('from-left') ? -48 : 48, autoAlpha: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 86%' } })
     )
-    gsap.to('.portrait-frame img', { yPercent: 6, ease: 'none', scrollTrigger: { trigger: '.portrait', start: 'top 20%', end: 'bottom top', scrub: true } })
+
+    // hero: the photo settles and drifts, the headline splits apart as you scroll away
+    gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } })
+      .fromTo('.portrait-frame img', { scale: 1.08 }, { scale: 1.2, yPercent: 10, ease: 'none' }, 0)
+      .to('.hero h1 .line:first-child', { xPercent: -10, ease: 'none' }, 0)
+      .to('.hero h1 .line:last-child', { xPercent: 10, ease: 'none' }, 0)
+      .to('.float-card', { y: -50, autoAlpha: 0, ease: 'none' }, 0)
+
+    // case studies stack: each card sticks, and the one underneath sinks back as the next slides over it
+    const cards = gsap.utils.toArray('.cases > .case')
+    cards.forEach((card, i) => {
+      const next = cards[i + 1]
+      if (!next) return
+      gsap.to(card, { scale: 0.94, filter: 'brightness(0.4)', ease: 'none', scrollTrigger: { trigger: next, start: 'top 70%', end: 'top 110px', scrub: true } })
+    })
+
+    // data charts: scrolling down moves them sideways, one chart per stop
+    const pin = document.querySelector('.dash-pin')
+    const track = pin?.querySelector('.dash')
+    if (pin && track) {
+      const n = track.children.length
+      const dist = () => track.scrollWidth - pin.clientWidth
+      const now = pin.querySelector('.dash-now')
+      gsap.to(track, {
+        x: () => -dist(), ease: 'none',
+        scrollTrigger: {
+          trigger: pin, start: () => `top ${Math.round(nav.offsetHeight + 8)}px`, end: () => '+=' + dist(), pin: true, scrub: 0.6, invalidateOnRefresh: true,
+          refreshPriority: 10, // measure this pin first so every trigger below it accounts for its extra scroll length
+          snap: { snapTo: 1 / (n - 1), duration: 0.35, ease: 'power2.out' },
+          onUpdate: (st) => { now.textContent = String(Math.min(n, Math.round(st.progress * (n - 1)) + 1)) },
+        },
+      })
+    }
+    ScrollTrigger.sort()
+    ScrollTrigger.refresh()
   })
+}
+
+// phones: the long "More results" table starts with three rows
+const moreRows = document.querySelectorAll('.more-table tbody tr')
+if (moreRows.length > 3) {
+  const btn = document.createElement('button')
+  btn.type = 'button'
+  btn.className = 'more-toggle'
+  const label = () => (btn.textContent = document.body.classList.contains('more-open') ? 'Show fewer' : `Show ${moreRows.length - 3} more`)
+  btn.addEventListener('click', () => { document.body.classList.toggle('more-open'); label(); ScrollTrigger.refresh() })
+  label()
+  document.querySelector('.more-table').after(btn)
 }
 
 // industries ticker, nudged by scroll speed and direction

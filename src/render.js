@@ -77,7 +77,7 @@ export function renderHome() {
 <section class="hero" id="top">
   <div class="hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow rv">${hero.eyebrow}</p>
+      <p class="eyebrow rv"><span class="eb-long">${hero.eyebrow}</span><span class="eb-short">Growth partner · Naples, FL</span></p>
       <h1>${hero.lines.map((l, i, all) => i === all.length - 1 ? `<span class="line"><span>${l.replace(/\.$/, '')}</span><span class="dot">.</span></span>` : `<span class="line"><span>${l}</span></span>`).join(' ')}</h1>
       <p class="lead rv">${hero.sub}</p>
       <div class="btns rv">
@@ -111,8 +111,8 @@ export function renderHome() {
     <h2 class="sw">${words('The work, counted.')}</h2>
     <p class="sec-sub rv">Pulled from the case study deck. Hover or tap a bar for its value.</p>
   </header>
-  <ul class="stat-row" data-carousel>${numbers.stats.map((st) => `<li class="rv"><strong>${st.value}</strong><span>${st.label}</span></li>`).join('')}</ul>
-  <div class="dash">${numbers.charts.map((ch) => renderChart(ch)).join('')}</div>
+  <ul class="stat-row">${numbers.stats.map((st) => `<li class="rv"><strong>${st.value}</strong><span>${st.label}</span></li>`).join('')}</ul>
+  <div class="dash-pin"><div class="dash-bar" aria-hidden="true"><span>Scroll to move through the data</span><b><i class="dash-now">1</i> / ${numbers.charts.length}</b></div><div class="dash">${numbers.charts.map((ch) => renderChart(ch)).join('')}</div></div>
 </section>
 
 <section class="work" id="work">
@@ -121,8 +121,7 @@ export function renderHome() {
     <h2 class="sw">${words('Results, in the client’s own numbers.')}</h2>
     <p class="sec-sub rv">Every figure below comes from the ad, analytics and search accounts we ran.</p>
   </header>
-  <div class="cases" data-carousel>${cases.map(caseBlock).join('')}</div>
-  <div class="dots" aria-hidden="true">${cases.map((c, i) => `<button type="button" data-dot="${i}" tabindex="-1"></button>`).join('')}<span>Swipe</span></div>
+  <div class="cases">${cases.map(caseBlock).join('')}</div>
   <div class="more">
     <h3 class="rv">More results</h3>
     <table class="more-table">
