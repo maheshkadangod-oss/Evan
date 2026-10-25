@@ -2,7 +2,7 @@
 // engines and AI crawlers get the full content without running any JavaScript.
 import { renderChart, funnelSvg } from './charts.js'
 import { mapSize, nationPath, statesPath, places } from './us-map.js'
-import { site, hero, industries, cases, moreWork, services, method, about, cta, faq, numbers } from './content.js'
+import { site, hero, industries, cases, moreWork, services, method, about, cta, faq, numbers, local } from './content.js'
 
 const ext = 'target="_blank" rel="noopener"'
 const year = new Date().getFullYear()
@@ -51,8 +51,8 @@ export function navHtml(prefix = '') {
 
 export function footerHtml() {
   return `<footer class="foot">
-  <div><strong>${site.fullName}</strong><span>${site.role}</span></div>
-  <address><span>${site.company}</span><span>${site.address}</span></address>
+  <div><strong>${site.fullName}</strong><span>${site.role}</span><a href="/${local.slug}/">Marketing in Naples, FL</a></div>
+  <address><span>${site.company}</span><span>${site.address}</span><a href="${site.mapsLink}" ${ext}>Get directions</a></address>
   <div><a href="tel:${site.tel}">${site.phone}</a><span>© ${year} ${site.fullName}</span></div>
 </footer>`
 }
@@ -158,6 +158,7 @@ export function renderHome() {
       <p class="kicker">Based in Southwest Florida</p>
       <h2 class="sw">${words('Naples to New York, and coast to coast.')}</h2>
       <p class="sec-sub">A few of the places my clients call home.</p>
+      <a class="read-more" href="/${local.slug}/">Marketing for Naples businesses <i aria-hidden="true">→</i></a>
       <ul class="places">${places.map((p, i) => `<li class="rv" data-place="${i}"><b>${p.city}${p.hq ? ' <em>home base</em>' : ''}</b><span>${p.clients.join(', ')}</span></li>`).join('')}</ul>
     </div>
     <figure class="map from-right">
@@ -231,6 +232,67 @@ export function renderCase(c) {
   <div class="cp-next">
     <a class="btn primary" href="${site.bookLink}" ${ext}>Get a plan like this for your business<i aria-hidden="true">→</i></a>
     <a class="next-case" href="/work/${next.slug}/"><small>Next case study</small>${next.client}: ${next.headline}</a>
+  </div>
+</section>`
+}
+
+// The Naples, FL page: local intro, the season, who it's for, local proof, map, local FAQ.
+export function renderLocal() {
+  const nuc = cases.find((c) => c.slug === 'naples-urgent-care')
+  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(site.address)}&z=13&output=embed`
+  return `
+<section class="case-page local-page">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol>
+    <li><a href="/">Home</a></li>
+    <li aria-current="page">Naples, FL</li>
+  </ol></nav>
+  <header class="cp-head">
+    <p class="kicker">${local.kicker}</p>
+    <h1>${local.h1}</h1>
+    <p class="lead">${local.intro}</p>
+    <div class="btns">
+      <a class="btn primary" href="${site.bookLink}" ${ext}>Book a strategy call<i aria-hidden="true">→</i></a>
+      <a class="btn ghost" href="tel:${site.tel}">Call ${site.phone}</a>
+    </div>
+  </header>
+
+  <div class="local-grid">
+    <div>
+      <h2>${local.season.title}</h2>
+      <p class="body">${local.season.body}</p>
+      <h3 class="local-h3">${local.whoTitle}</h3>
+      <ul class="local-list">${local.who.map((w) => `<li>${w}</li>`).join('')}</ul>
+      <h3 class="local-h3">Areas I serve in person</h3>
+      <ul class="creds">${site.serviceArea.map((a) => `<li>${a}</li>`).join('')}</ul>
+    </div>
+    ${nuc ? `<a class="local-proof" href="/work/${nuc.slug}/">
+      <span class="kicker">Local result</span>
+      <strong>#12 → #1</strong>
+      <span>${nuc.client} on Google for “Naples urgent care.”</span>
+      <em>Read the case study →</em>
+    </a>` : ''}
+  </div>
+
+  <figure class="local-map">
+    <iframe title="Map of ${site.company} in North Naples, Florida" src="${mapSrc}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <figcaption><span>${site.company} · ${site.address}</span><a href="${site.mapsLink}" ${ext}>Get directions →</a></figcaption>
+  </figure>
+
+  <div class="local-services">
+    <h2>What I do for Naples businesses</h2>
+    <ol class="svc">${services.map((sv, i) => `<li class="lit"><span class="n">${String(i + 1).padStart(2, '0')}</span><div><h3>${sv.name}</h3><p>${sv.body}</p></div></li>`).join('')}</ol>
+  </div>
+
+  <div class="local-faq faq">
+    <h2>Questions from Naples owners</h2>
+    <div class="faq-list">${local.faq.map((f, i) => `
+      <details${i === 0 ? ' open' : ''}><summary><h3>${f.q}</h3><i aria-hidden="true"></i></summary><p>${f.a}</p></details>`).join('')}
+    </div>
+  </div>
+
+  <div class="cp-next">
+    <a class="btn primary" href="${site.bookLink}" ${ext}>Let’s look at your numbers<i aria-hidden="true">→</i></a>
+    <a class="next-case" href="/#work"><small>See more results</small>Case studies from clients across the U.S.</a>
   </div>
 </section>`
 }

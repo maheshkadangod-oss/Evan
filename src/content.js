@@ -17,7 +17,11 @@ export const site = {
   agency: 'https://jetspeedsocial.com/',
   dmKeyword: 'MDA',
   url: 'https://evanjetlee.com',
-  geo: { lat: 26.2716, lon: -81.7787 }, // approx. for 5660 Strand Ct, Naples, FL 34110
+  geo: { lat: 26.2744267, lon: -81.7442175 }, // 5660 Strand Ct, Naples, FL 34110 (North Naples), from Google Maps
+  // Swap this for the Google Business Profile link once the profile is live and verified.
+  mapsLink: 'https://www.google.com/maps/search/?api=1&query=5660+Strand+Ct%2C+Naples%2C+FL+34110',
+  // CONFIRM with Evan: the Southwest Florida towns he is happy to serve in person.
+  serviceArea: ['Naples', 'North Naples', 'Bonita Springs', 'Estero', 'Marco Island', 'Fort Myers', 'Cape Coral'],
 }
 
 export const hero = {
@@ -284,6 +288,41 @@ export const numbers = {
         { label: 'Google Ads', value: 4 },
         { label: 'YouTube Ads', value: 2 },
       ],
+    },
+  ],
+}
+
+// The Naples, FL page (/naples-fl/). Written for local owners first, search engines second.
+export const local = {
+  slug: 'naples-fl',
+  title: 'Marketing Growth Partner in Naples, FL · Evan Lee',
+  description: 'Evan Lee helps Naples and Southwest Florida businesses get more customers from Google, Facebook, and their website, tracked to revenue. Based in North Naples.',
+  kicker: 'Naples, Florida',
+  h1: 'Marketing in Naples that pays for itself.',
+  intro: 'I’m Evan Lee. I run JetSpeedSocial out of North Naples and help Southwest Florida owners get more customers from Google, Facebook, and their own website. Every campaign is tracked to revenue, so you know what’s working.',
+  season: {
+    title: 'Naples has a season. Your marketing should too.',
+    body: 'From November through April the town fills up, and so do your competitors’ ad budgets. We push hardest when winter residents are here, then keep a steady base running through the summer so the phone doesn’t go quiet.',
+  },
+  whoTitle: 'Who I work with here',
+  who: ['Medical practices and clinics', 'Home services and contractors', 'Law firms', 'Real estate and builders', 'Hospitality and restaurants', 'Retail and e-commerce'],
+  // CONFIRM all four answers with Evan.
+  faq: [
+    {
+      q: 'Do you meet with clients in person in Naples?',
+      a: 'Yes. If you’re in Naples, Bonita Springs, or Estero, we can meet face to face. Clients outside Southwest Florida work with me over video calls and shared dashboards.',
+    },
+    {
+      q: 'How do you plan around the Naples season?',
+      a: 'We set budgets by month. Spend goes up from November through April, when winter residents are in town, and a steady base runs through the summer so leads keep coming in year-round.',
+    },
+    {
+      q: 'Can you help my business show up on Google Maps?',
+      a: 'Yes. Local SEO covers your Google Business Profile, reviews, location pages, and directory listings, so you show up when people nearby search for what you do.',
+    },
+    {
+      q: 'Who is a good marketing partner for a small business in Naples, FL?',
+      a: 'Look for someone who tracks results to revenue, shows you real accounts before you sign, and knows how the local season changes demand. That’s how I work at JetSpeedSocial, based in North Naples.',
     },
   ],
 }

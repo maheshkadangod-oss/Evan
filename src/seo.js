@@ -1,5 +1,5 @@
 // Structured data and crawler files. Runs at build time only.
-import { site, hero, cases, services, faq } from './content.js'
+import { site, hero, cases, services, faq, local } from './content.js'
 
 const abs = (p = '/') => site.url + p
 
@@ -10,7 +10,14 @@ const org = {
   url: site.agency,
   telephone: '+1-239-877-2927',
   address: { '@type': 'PostalAddress', streetAddress: '5660 Strand Ct', addressLocality: 'Naples', addressRegion: 'FL', postalCode: '34110', addressCountry: 'US' },
-  areaServed: { '@type': 'Country', name: 'United States' },
+  description: 'Digital marketing agency in North Naples, Florida: Google Ads, Facebook and Instagram ads, SEO, GEO, and websites, tracked to revenue.',
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
+  hasMap: site.mapsLink,
+  areaServed: [
+    ...site.serviceArea.map((name) => ({ '@type': 'City', name: `${name}, FL` })),
+    { '@type': 'AdministrativeArea', name: 'Southwest Florida' },
+    { '@type': 'Country', name: 'United States' },
+  ],
   founder: { '@id': abs('/#evan') },
   sameAs: [site.instagram, 'https://www.linkedin.com/company/jetspeedsocial/'],
   knowsAbout: ['Google Ads', 'Facebook Ads', 'YouTube Ads', 'Search engine optimization', 'Generative engine optimization', 'Web design', 'Fractional CMO'],
@@ -31,7 +38,7 @@ const person = {
   image: abs('/img/evan-portrait.webp'),
   worksFor: { '@id': abs('/#jetspeedsocial') },
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'Samford University' },
-  homeLocation: { '@type': 'Place', name: 'Naples, Florida' },
+  homeLocation: { '@type': 'Place', name: 'Naples, Florida', geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon } },
   sameAs: [site.linkedin, site.instagram],
 }
 
@@ -76,6 +83,28 @@ export function caseSchema(c) {
         image: abs('/og.jpg'),
       },
       crumbs([['Home', '/'], ['Work', '/#work'], [c.client, `/work/${c.slug}/`]]),
+    ],
+  }
+}
+
+export function localSchema() {
+  const url = abs(`/${local.slug}/`)
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      website,
+      person,
+      org,
+      { '@type': 'WebPage', '@id': url + '#page', url, name: local.title, description: local.description, about: { '@id': abs('/#jetspeedsocial') }, isPartOf: { '@id': abs('/#website') }, inLanguage: 'en-US' },
+      {
+        '@type': 'Service',
+        name: 'Digital marketing in Naples, FL',
+        serviceType: 'Digital marketing',
+        provider: { '@id': abs('/#jetspeedsocial') },
+        areaServed: site.serviceArea.map((name) => ({ '@type': 'City', name: `${name}, FL` })),
+      },
+      { '@type': 'FAQPage', mainEntity: local.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+      crumbs([['Home', '/'], ['Naples, FL', `/${local.slug}/`]]),
     ],
   }
 }
@@ -136,10 +165,17 @@ ${hero.proof.map((p) => `- ${p.value}: ${p.label}`).join('\n')}
 ## Case studies
 ${cases.map((c) => `- [${c.client}: ${c.headline}](${abs(`/work/${c.slug}/`)}): ${c.summary}`).join('\n')}
 
+## Location and service area
+- Office: ${site.address} (North Naples)
+- Serves in person: ${site.serviceArea.join(', ')}, Florida
+- Works remotely with owners anywhere in the United States
+- Naples page: ${abs(`/${local.slug}/`)}
+- Map: ${site.mapsLink}
+
 ## Services
 ${services.map((s) => `- ${s.name}: ${s.body}`).join('\n')}
 
 ## Frequently asked questions
-${faq.map((f) => `### ${f.q}\n${f.a}`).join('\n\n')}
+${[...faq, ...local.faq].map((f) => `### ${f.q}\n${f.a}`).join('\n\n')}
 `
 }

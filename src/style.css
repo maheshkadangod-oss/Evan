@@ -459,6 +459,30 @@ body.sub { background: radial-gradient(1200px 600px at 75% -10%, rgba(217, 98, 4
   .map .pulse { animation: none; }
 }
 
+/* ---------- Naples, FL page ---------- */
+.local-page .cp-head .btns { margin-top: 30px; }
+.local-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: start; margin-top: 80px; }
+.local-grid h2, .local-services h2, .local-faq h2 { margin-bottom: 20px; }
+.local-grid .body { color: var(--ink-2); font-size: clamp(17px, 1.3vw, 19px); max-width: 52ch; }
+.local-h3 { font-size: 20px; margin: 36px 0 14px; }
+.local-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; border-top: 1px solid var(--line); }
+.local-list li { padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+.local-proof { display: flex; flex-direction: column; gap: 10px; padding: 28px; border: 1px solid var(--line-2); border-radius: 18px; background: var(--card); transition: border-color 0.3s; }
+.local-proof .kicker { margin: 0; }
+.local-proof strong { font-family: var(--serif); font-weight: 700; font-size: clamp(48px, 5vw, 72px); line-height: 1; letter-spacing: -0.04em; color: var(--accent-ink); }
+.local-proof span { color: var(--ink-2); }
+.local-proof em { font-style: normal; font-size: 14px; color: var(--ink); margin-top: 6px; }
+.local-proof:hover { border-color: var(--accent); }
+.local-map { margin: 80px 0 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--bg-2); }
+.local-map iframe { display: block; width: 100%; height: 380px; border: 0; filter: invert(0.92) hue-rotate(180deg) saturate(0.6) brightness(0.9); }
+.local-map figcaption { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 16px 20px; font-size: 14px; color: var(--mute); }
+.local-map figcaption a { color: var(--ink); }
+.local-map figcaption a:hover { color: var(--accent-ink); }
+.local-services, .local-faq { margin-top: 90px; }
+.local-faq { padding: 0; }
+.foot a { color: var(--ink-2); }
+.foot a:hover { color: var(--accent-ink); }
+
 /* ================= phone: the desktop feel, rebuilt for a thumb ================= */
 @media (max-width: 960px) {
   section { overflow-x: clip; }
@@ -525,4 +549,11 @@ body.sub { background: radial-gradient(1200px 600px at 75% -10%, rgba(217, 98, 4
   .links a { padding-block: 10px; }
   .logo { padding-block: 4px; }
   .foot a { padding-block: 10px; display: inline-block; }
+
+  .local-grid { grid-template-columns: 1fr; margin-top: 48px; }
+  .local-list { grid-template-columns: 1fr; }
+  .local-map { margin-top: 48px; }
+  .local-map iframe { height: 300px; }
+  .local-services, .local-faq { margin-top: 56px; }
+  .local-page .cp-head .btns .btn { flex: 1 1 100%; justify-content: center; }
 }

@@ -60,17 +60,16 @@ function prerender() {
         .replace('<!--foot-->', footerHtml())
     },
     async generateBundle(_, bundle) {
-      const { renderCase, navHtml, footerHtml } = await import(fileUrl('/src/render.js'))
+      const { renderCase, renderLocal, navHtml, footerHtml } = await import(fileUrl('/src/render.js'))
       const seo = await import(fileUrl('/src/seo.js'))
-      const { site, cases } = await import(fileUrl('/src/content.js'))
+      const { site, cases, local } = await import(fileUrl('/src/content.js'))
       const css = Object.values(bundle).filter((f) => f.fileName.endsWith('.css')).map((f) => `<link rel="stylesheet" href="/${f.fileName}" />`).join('')
-      for (const c of cases) {
-        const html = `<!doctype html>
+      const page = (head, body) => `<!doctype html>
 <html lang="en-US">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    ${headTags({ title: `${c.client} case study: ${c.headline} · Evan Lee`, description: c.summary, path: `/work/${c.slug}/`, type: 'article', schema: seo.caseSchema(c), site })}
+    ${head}
     <meta name="theme-color" content="#0f0d0b" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     ${FONTS}
@@ -78,7 +77,7 @@ function prerender() {
   </head>
   <body class="sub mbar-on">
     ${navHtml('/').replace('class="nav"', 'class="nav solid"')}
-    <main id="app">${renderCase(c)}</main>
+    <main id="app">${body}</main>
     ${footerHtml()}
     <script>
       // phone menu on case study pages (the home page gets this from main.js)
@@ -90,10 +89,14 @@ function prerender() {
   </body>
 </html>
 `
-        this.emitFile({ type: 'asset', fileName: `work/${c.slug}/index.html`, source: html })
+      for (const c of cases) {
+        const head = headTags({ title: `${c.client} case study: ${c.headline} · Evan Lee`, description: c.summary, path: `/work/${c.slug}/`, type: 'article', schema: seo.caseSchema(c), site })
+        this.emitFile({ type: 'asset', fileName: `work/${c.slug}/index.html`, source: page(head, renderCase(c)) })
       }
+      const localHead = headTags({ title: local.title, description: local.description, path: `/${local.slug}/`, schema: seo.localSchema(), site })
+      this.emitFile({ type: 'asset', fileName: `${local.slug}/index.html`, source: page(localHead, renderLocal()) })
       const today = new Date().toISOString().slice(0, 10)
-      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: seo.sitemap(['/', ...cases.map((c) => `/work/${c.slug}/`)], today) })
+      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: seo.sitemap(['/', `/${local.slug}/`, ...cases.map((c) => `/work/${c.slug}/`)], today) })
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: seo.robots() })
       this.emitFile({ type: 'asset', fileName: 'llms.txt', source: seo.llmsTxt() })
     },
