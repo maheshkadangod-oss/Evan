@@ -197,7 +197,7 @@ h2 { font-size: clamp(36px, 4.4vw, 66px); line-height: 1.02; letter-spacing: -0.
 .more-table tbody tr:hover { background: rgba(242, 235, 224, 0.03); }
 
 /* ---------- by the numbers ---------- */
-.eb-short, .dash-bar, .more-toggle { display: none; }
+.eb-short, .more-toggle { display: none; }
 .numbers { padding-block: 110px 40px; }
 .stat-row { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 40px; }
 .stat-row li { padding: 26px 24px 26px 0; display: flex; flex-direction: column; gap: 8px; }
@@ -491,11 +491,8 @@ body.sub { background: radial-gradient(1200px 600px at 75% -10%, rgba(217, 98, 4
 
   /* data charts: one per screen, moved sideways by vertical scroll */
   .dash-pin { overflow: hidden; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); max-width: none; }
-  .dash-bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute); }
-  .dash-bar b { font-weight: 400; color: var(--ink); }
-  .dash-bar .dash-now { font-style: normal; color: var(--accent-ink); }
-  .dash { display: flex !important; gap: 14px; width: max-content; align-items: flex-start; }
-  .dash > .chart-card { flex: 0 0 calc(100vw - var(--gutter) * 2 - 18px); }
+  .dash { display: flex !important; gap: calc(var(--gutter) * 2); width: max-content; align-items: flex-start; }
+  .dash > .chart-card { flex: 0 0 calc(100vw - var(--gutter) * 2); }
 
   /* case studies: sticky cards that stack as you scroll */
   .cases { display: block !important; overflow: visible; margin: 0; padding: 0; }

@@ -112,12 +112,11 @@ export function renderHome() {
     <p class="sec-sub rv">Pulled from the case study deck. Hover or tap a bar for its value.</p>
   </header>
   <ul class="stat-row">${numbers.stats.map((st) => `<li class="rv"><strong>${st.value}</strong><span>${st.label}</span></li>`).join('')}</ul>
-  <div class="dash-pin"><div class="dash-bar" aria-hidden="true"><span>Scroll to move through the data</span><b><i class="dash-now">1</i> / ${numbers.charts.length}</b></div><div class="dash">${numbers.charts.map((ch) => renderChart(ch)).join('')}</div></div>
+  <div class="dash-pin"><div class="dash">${numbers.charts.map((ch) => renderChart(ch)).join('')}</div></div>
 </section>
 
 <section class="work" id="work">
   <header class="sec-head">
-    <p class="kicker rv">Selected work</p>
     <h2 class="sw">${words('Results, in the client’s own numbers.')}</h2>
     <p class="sec-sub rv">Every figure below comes from the ad, analytics and search accounts we ran.</p>
   </header>

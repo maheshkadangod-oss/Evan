@@ -250,15 +250,14 @@ if (!reduced) {
     const track = pin?.querySelector('.dash')
     if (pin && track) {
       const n = track.children.length
-      const dist = () => track.scrollWidth - pin.clientWidth
-      const now = pin.querySelector('.dash-now')
+      // exact distance from the first card to the last, so each stop lines a card up with the margin
+      const dist = () => track.lastElementChild.offsetLeft - track.firstElementChild.offsetLeft
       gsap.to(track, {
         x: () => -dist(), ease: 'none',
         scrollTrigger: {
           trigger: pin, start: () => `top ${Math.round(nav.offsetHeight + 8)}px`, end: () => '+=' + dist(), pin: true, scrub: 0.6, invalidateOnRefresh: true,
           refreshPriority: 10, // measure this pin first so every trigger below it accounts for its extra scroll length
           snap: { snapTo: 1 / (n - 1), duration: 0.35, ease: 'power2.out' },
-          onUpdate: (st) => { now.textContent = String(Math.min(n, Math.round(st.progress * (n - 1)) + 1)) },
         },
       })
     }
