@@ -189,7 +189,7 @@ if (!reduced) {
     steps.querySelectorAll('li').forEach((li) => ScrollTrigger.create({ trigger: li, start: 'top 68%', onEnter: () => li.classList.add('lit'), onLeaveBack: () => li.classList.remove('lit') }))
   }
   // services light up one at a time as they pass the middle of the screen
-  document.querySelectorAll('.svc li').forEach((li) =>
+  document.querySelectorAll('.svc > li').forEach((li) =>
     ScrollTrigger.create({ trigger: li, start: 'top 72%', onEnter: () => li.classList.add('lit'), onLeaveBack: () => li.classList.remove('lit') })
   )
 

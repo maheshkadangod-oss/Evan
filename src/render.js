@@ -2,7 +2,7 @@
 // engines and AI crawlers get the full content without running any JavaScript.
 import { renderChart, funnelSvg } from './charts.js'
 import { mapSize, nationPath, statesPath, places } from './us-map.js'
-import { site, hero, industries, cases, moreWork, services, method, about, cta, faq, numbers, local } from './content.js'
+import { site, hero, industries, cases, moreWork, services, method, about, cta, faq, numbers, local, ventures } from './content.js'
 
 const ext = 'target="_blank" rel="noopener"'
 const year = new Date().getFullYear()
@@ -49,11 +49,44 @@ export function navHtml(prefix = '') {
     </div>`
 }
 
+const icons = {
+  linkedin: '<path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11.25H3V9.75Zm6.5 0h3.8v1.6h.06c.53-.95 1.84-1.95 3.79-1.95 4.05 0 4.8 2.5 4.8 5.76V21h-4v-5.1c0-1.22-.02-2.79-1.75-2.79-1.75 0-2.02 1.32-2.02 2.7V21h-4V9.75Z"/>',
+  instagram: '<path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4Zm0 7.75a3.05 3.05 0 1 1 0-6.1 3.05 3.05 0 0 1 0 6.1ZM17.9 7.1a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0Z"/><path d="M12 2.5c-2.6 0-2.9 0-3.92.06-1 .04-1.7.2-2.3.44a4.7 4.7 0 0 0-1.7 1.1A4.7 4.7 0 0 0 3 5.8c-.24.6-.4 1.3-.44 2.3C2.5 9.1 2.5 9.4 2.5 12s0 2.9.06 3.92c.04 1 .2 1.7.44 2.3.24.64.57 1.18 1.1 1.7.52.53 1.06.86 1.7 1.1.6.24 1.3.4 2.3.44 1.02.05 1.33.06 3.92.06s2.9 0 3.92-.06c1-.04 1.7-.2 2.3-.44a4.7 4.7 0 0 0 1.7-1.1 4.7 4.7 0 0 0 1.1-1.7c.24-.6.4-1.3.44-2.3.05-1.02.06-1.33.06-3.92s0-2.9-.06-3.92c-.04-1-.2-1.7-.44-2.3a4.7 4.7 0 0 0-1.1-1.7 4.7 4.7 0 0 0-1.7-1.1c-.6-.24-1.3-.4-2.3-.44C14.9 2.5 14.6 2.5 12 2.5Zm0 1.7c2.55 0 2.85 0 3.86.06.93.04 1.44.2 1.78.33.45.17.77.38 1.1.72.34.33.55.65.72 1.1.13.34.29.85.33 1.78.05 1 .06 1.3.06 3.86s0 2.85-.06 3.86c-.04.93-.2 1.44-.33 1.78-.17.45-.38.77-.72 1.1-.33.34-.65.55-1.1.72-.34.13-.85.29-1.78.33-1 .05-1.3.06-3.86.06s-2.85 0-3.86-.06c-.93-.04-1.44-.2-1.78-.33a2.96 2.96 0 0 1-1.1-.72 2.96 2.96 0 0 1-.72-1.1c-.13-.34-.29-.85-.33-1.78C4.2 14.85 4.2 14.55 4.2 12s0-2.85.06-3.86c.04-.93.2-1.44.33-1.78.17-.45.38-.77.72-1.1.33-.34.65-.55 1.1-.72.34-.13.85-.29 1.78-.33C9.15 4.2 9.45 4.2 12 4.2Z"/>',
+  facebook: '<path d="M13.5 21v-7.6h2.56l.38-2.97H13.5V8.54c0-.86.24-1.45 1.47-1.45h1.57V4.44A21 21 0 0 0 14.25 4.3c-2.26 0-3.8 1.38-3.8 3.9v2.23H7.9v2.97h2.55V21h3.05Z"/>',
+  mail: '<path d="M3 5.5h18v13H3v-13Zm2 2v.3l7 4.7 7-4.7v-.3H5Zm14 2.7-7 4.7-7-4.7v6.3h14v-6.3Z"/>',
+}
+const icon = (name) => `<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">${icons[name]}</svg>`
+
 export function footerHtml() {
+  const socials = [
+    ['linkedin', 'Evan on LinkedIn', site.linkedin],
+    ['linkedin', 'JetSpeedSocial on LinkedIn', site.linkedinCompany],
+    ['instagram', 'JetSpeedSocial on Instagram', site.instagram],
+    ['facebook', 'Evan on Facebook', site.facebook],
+    ['mail', `Email ${site.email}`, `mailto:${site.email}`],
+  ]
   return `<footer class="foot">
-  <div><strong>${site.fullName}</strong><span>${site.role}</span><a href="/${local.slug}/">Marketing in Naples, FL</a></div>
-  <address><span>${site.company}</span><span>${site.address}</span><a href="${site.mapsLink}" ${ext}>Get directions</a></address>
-  <div><a href="tel:${site.tel}">${site.phone}</a><span>© ${year} ${site.fullName}</span></div>
+  <div class="foot-grid">
+    <div class="foot-col">
+      <strong class="foot-name">${site.nickname}</strong>
+      <span>${site.titles}</span>
+      <a href="/${local.slug}/">Marketing in Naples, FL</a>
+      <ul class="socials" aria-label="Social media">${socials.map(([k, label, href]) => `<li><a href="${href}" ${href.startsWith('mailto') ? '' : ext} aria-label="${label}" title="${label}">${icon(k)}</a></li>`).join('')}</ul>
+    </div>
+    <address class="foot-col">
+      <b>${site.company}</b>
+      <span>${site.address}</span>
+      <a href="${site.mapsLink}" ${ext}>Get directions</a>
+      <a href="tel:${site.tel}">${site.phone}</a>
+      <a href="mailto:${site.email}">${site.email}</a>
+      <span>${site.hours}</span>
+    </address>
+    <div class="foot-col">
+      <b>Ventures</b>
+      ${ventures.map((v) => `<a href="${v.url}" ${ext}>${v.name}<small>${v.status}</small></a>`).join('')}
+    </div>
+  </div>
+  <div class="foot-base"><span>© ${year} ${site.fullName}</span><span>${site.city}</span></div>
 </footer>`
 }
 
@@ -86,7 +119,7 @@ export function renderHome() {
       </div>
     </div>
     <figure class="portrait rv">
-      <div class="portrait-frame"><img src="/img/evan-portrait.webp" alt="Portrait of Evan Lee, marketing growth partner in Naples, Florida" width="880" height="1100" fetchpriority="high" /></div>
+      <div class="portrait-frame"><img src="/img/evan-portrait.webp" alt="Evan “Jet” Lee, marketing growth partner, in Naples, Florida" width="824" height="1030" fetchpriority="high" /></div>
       <figcaption><span>${site.name}</span><span>${site.city}</span></figcaption>
       <div class="float-card" aria-hidden="true">
         <span class="fc-k">Peddinghaus · Google Ads</span>
@@ -148,7 +181,7 @@ export function renderHome() {
       <h2 class="sw">${words('One team for the whole path to revenue.')}</h2>
       <p class="sec-sub rv">Delivered through <a class="inline" href="${site.agency}" ${ext}>JetSpeedSocial</a>, my agency in Naples.</p>
     </div>
-    <ol class="svc">${services.map((s, i) => `<li class="rv"><span class="n">${String(i + 1).padStart(2, '0')}</span><div><h3>${s.name}</h3><p>${s.body}</p></div></li>`).join('')}</ol>
+    <ol class="svc">${services.map((s, i) => `<li class="rv"><span class="n">${String(i + 1).padStart(2, '0')}</span><div><h3>${s.name}</h3><p>${s.body}</p>${s.items ? `<ul class="svc-items">${s.items.map((it) => `<li>${it}</li>`).join('')}</ul>` : ''}</div></li>`).join('')}</ol>
   </div>
 </section>
 
@@ -182,7 +215,9 @@ export function renderHome() {
       <h2 class="sw">${words(about.title)}</h2>
       ${about.body.map((p) => `<p class="body">${p}</p>`).join('')}
       <ul class="creds">${about.creds.map((c) => `<li>${c}</li>`).join('')}</ul>
-      <p class="links"><a href="${site.linkedin}" ${ext}>LinkedIn</a><a href="${site.instagram}" ${ext}>Instagram</a><a href="${site.agency}" ${ext}>JetSpeedSocial</a></p>
+      <h3 class="ventures-h">Businesses I’ve built</h3>
+      <ul class="ventures">${ventures.map((v) => `<li><a href="${v.url}" ${ext}><span class="v-name">${v.name}</span><span class="v-note">${v.note}</span><em class="v-tag ${v.status.toLowerCase()}">${v.status}</em></a></li>`).join('')}</ul>
+      <p class="links"><a href="${site.linkedin}" ${ext}>LinkedIn</a><a href="${site.instagram}" ${ext}>Instagram</a><a href="${site.facebook}" ${ext}>Facebook</a><a href="mailto:${site.email}">${site.email}</a></p>
     </div>
   </div>
 </section>

@@ -1,25 +1,33 @@
-// All site copy lives here. Numbers come from the "Case Studies SEO & PPC | 2026 JSS" deck
-// and jetspeedsocial.com. Lines marked CONFIRM need Evan's sign-off before launch.
+// All site copy lives here. Numbers come from the "Case Studies SEO & PPC | 2026 JSS" deck,
+// jetspeedsocial.com and evanjetlee.com. Lines marked CONFIRM need Evan's sign-off before launch.
 
 export const site = {
   name: 'Evan Lee',
   fullName: 'Evan David Lee',
+  nickname: 'Evan “Jet” Lee', // as he signs it on evanjetlee.com
+  titles: 'Entrepreneur. Project manager. Fractional CMO.', // his own line on evanjetlee.com
   role: 'Marketing growth partner and fractional CMO',
   company: 'JetSpeedSocial',
   since: 2014, // CONFIRM: from the "2014-Present" footer on jetspeedsocial.com
   city: 'Naples, Florida',
-  address: '5660 Strand Ct, Naples, FL 34110',
+  address: '5660 Strand Ct, Suite A102, Naples, FL 34110', // suite from jetspeedsocial.com/contact
+  street: '5660 Strand Ct, Suite A102',
+  email: 'evan@jetspeedsocial.com',
+  hours: 'Monday to Friday, 9am to 5pm',
+  openingHours: 'Mo-Fr 09:00-17:00',
   phone: '(239) 877-2927',
   tel: '+12398772927',
   bookLink: 'https://jetspeedsocial.com/contact/',
-  linkedin: 'https://www.linkedin.com/in/evanjetlee',
+  linkedin: 'https://www.linkedin.com/in/evanjetlee/',
+  linkedinCompany: 'https://www.linkedin.com/company/jetspeedsocial/',
+  facebook: 'https://www.facebook.com/profile.php?id=100077257704316',
   instagram: 'https://www.instagram.com/jetspeedsocial/',
   agency: 'https://jetspeedsocial.com/',
   dmKeyword: 'MDA',
   url: 'https://evanjetlee.com',
   geo: { lat: 26.2744267, lon: -81.7442175 }, // 5660 Strand Ct, Naples, FL 34110 (North Naples), from Google Maps
   // Swap this for the Google Business Profile link once the profile is live and verified.
-  mapsLink: 'https://www.google.com/maps/search/?api=1&query=5660+Strand+Ct%2C+Naples%2C+FL+34110',
+  mapsLink: 'https://www.google.com/maps/search/?api=1&query=JetSpeedSocial%2C+5660+Strand+Ct+Suite+A102%2C+Naples%2C+FL+34110',
   // CONFIRM with Evan: the Southwest Florida towns he is happy to serve in person.
   serviceArea: ['Naples', 'North Naples', 'Bonita Springs', 'Estero', 'Marco Island', 'Fort Myers', 'Cape Coral'],
 }
@@ -37,7 +45,7 @@ export const hero = {
   ],
 }
 
-export const industries = ['Manufacturing', 'Healthcare', 'Law firms', 'E-commerce', 'Software', 'Home services', 'Fitness studios', 'Travel and hospitality', 'LASIK and medical', 'Investment firms', 'Contractors']
+export const industries = ['Plumbers', 'HVAC', 'Roofers', 'Landscapers', 'Electricians', 'Pest control', 'Solar', 'Medspas', 'Dentists', 'Chiropractors', 'Law firms', 'Manufacturers', 'Auto shops', 'Consultants']
 
 // Featured case studies. `chart` decides which graphic is drawn next to the story.
 export const cases = [
@@ -167,11 +175,11 @@ export const moreWork = [
 ]
 
 export const services = [
-  { name: 'Paid search and social', body: 'Google, YouTube, Facebook, and Instagram ads, tracked all the way to revenue, so you know what every dollar brought back.' },
-  { name: 'SEO and GEO', body: 'Rank on Google for the searches that bring in buyers, and show up when people ask AI tools for a recommendation.' },
-  { name: 'Websites that convert', body: 'Design and development built around one action: the call, the booking, or the sale.' },
-  { name: 'Social media', body: 'Content that keeps you in front of people who already know you, so they buy from you when they’re ready.' },
-  { name: 'Brand and creative', body: 'Identity, ad creative, and landing pages that look like the company you’re growing into.' },
+  { name: 'Search and AI visibility', body: 'Rank on Google for the searches that bring in buyers, and show up when people ask ChatGPT or Google’s AI for a recommendation.', items: ['SEO and AI SEO', 'Google Business Profile', 'Local business optimization', 'Content development'] },
+  { name: 'Paid ads', body: 'Google, YouTube, Facebook, and Instagram ads, tracked all the way to revenue, so you know what every dollar brought back.', items: ['Pay-per-click', 'Local Service Ads (Google Guaranteed)', 'Google and Facebook retargeting'] },
+  { name: 'Social media', body: 'Content that keeps you in front of people who already know you, so they buy from you when they’re ready.', items: ['Social media marketing', 'Ad creative'] },
+  { name: 'Websites and design', body: 'Fast, mobile-friendly sites built around one action: the call, the booking, or the sale. Plus the logo, the truck wrap, and everything in between.', items: ['Website design', 'Marketing design', 'Hosting and maintenance'] },
+  { name: 'Lead follow-up', body: 'Most leads go cold because nobody calls back fast enough. Email, text, and call tracking close that gap.', items: ['Email and text marketing', 'Call tracking'] },
 ]
 
 export const method = {
@@ -186,12 +194,22 @@ export const method = {
 export const about = {
   title: 'I’m Evan.',
   body: [
-    'I founded JetSpeedSocial in Naples, Florida, and I’ve spent the years since inside ad accounts, search rankings, and sales pipelines. My clients range from a local urgent care clinic to a national steel machinery manufacturer.',
+    'Most people call me Jet. I founded JetSpeedSocial in Naples, Florida, and I’ve spent more than 10 years inside ad accounts, search rankings, and sales pipelines. My clients range from a local urgent care clinic to a national steel machinery manufacturer.',
     'I studied at Samford University. Today I work as a growth partner and fractional CMO for owners who want marketing that answers to revenue, not vanity metrics.',
   ],
-  // CONFIRM all three with Evan before launch
-  creds: ['Google Premier Partner agency', 'ClickFunnels Two Comma Club', 'Samford University'],
+  // CONFIRM all of these with Evan before launch. The first two are from evanjetlee.com.
+  creds: ['10+ years in digital marketing', '$350M+ in PPC spend', 'Google Premier Partner agency', 'ClickFunnels Two Comma Club', 'Samford University'],
 }
+
+// Evan's other businesses, from evanjetlee.com.
+export const ventures = [
+  { name: 'JetSpeedSocial', url: 'https://jetspeedsocial.com/', status: 'Current', note: 'Digital marketing agency in Naples, FL' },
+  { name: 'DealGames LLC', url: 'https://www.dealgamesllc.com/', status: 'Sold', note: 'Built and sold' },
+  { name: 'YourFirmOurMarketing', url: 'https://yourfirmourmarketing.com/', status: 'Sold', note: 'Served as CMO, then sold' },
+  // CONFIRM the two store descriptions below; they are inferred from the domain names.
+  { name: 'SaltwaterAquariumWorld.com', url: 'https://saltwateraquariumworld.com/', status: 'Owner', note: 'Online store for saltwater aquariums' },
+  { name: 'PoolSupplySuperstore.com', url: 'https://poolsupplysuperstore.com/', status: 'Owner', note: 'Online store for pool supplies' },
+]
 
 export const cta = {
   title: ['Let’s look at', 'your numbers.'],

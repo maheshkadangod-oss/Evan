@@ -1,5 +1,5 @@
 // Structured data and crawler files. Runs at build time only.
-import { site, hero, cases, services, faq, local } from './content.js'
+import { site, hero, cases, services, faq, local, ventures } from './content.js'
 
 const abs = (p = '/') => site.url + p
 
@@ -9,7 +9,9 @@ const org = {
   name: site.company,
   url: site.agency,
   telephone: '+1-239-877-2927',
-  address: { '@type': 'PostalAddress', streetAddress: '5660 Strand Ct', addressLocality: 'Naples', addressRegion: 'FL', postalCode: '34110', addressCountry: 'US' },
+  email: site.email,
+  openingHours: site.openingHours,
+  address: { '@type': 'PostalAddress', streetAddress: site.street, addressLocality: 'Naples', addressRegion: 'FL', postalCode: '34110', addressCountry: 'US' },
   description: 'Digital marketing agency in North Naples, Florida: Google Ads, Facebook and Instagram ads, SEO, GEO, and websites, tracked to revenue.',
   geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
   hasMap: site.mapsLink,
@@ -19,12 +21,12 @@ const org = {
     { '@type': 'Country', name: 'United States' },
   ],
   founder: { '@id': abs('/#evan') },
-  sameAs: [site.instagram, 'https://www.linkedin.com/company/jetspeedsocial/'],
+  sameAs: [site.instagram, site.linkedinCompany],
   knowsAbout: ['Google Ads', 'Facebook Ads', 'YouTube Ads', 'Search engine optimization', 'Generative engine optimization', 'Web design', 'Fractional CMO'],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Marketing services',
-    itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, description: s.body } })),
+    itemListElement: services.flatMap((s) => [s.name, ...(s.items || [])].map((name) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name, ...(name === s.name ? { description: s.body } : {}) } }))),
   },
 }
 
@@ -32,14 +34,16 @@ const person = {
   '@type': 'Person',
   '@id': abs('/#evan'),
   name: site.fullName,
-  alternateName: site.name,
+  alternateName: [site.name, site.nickname, 'Jet Lee'],
+  email: site.email,
+  description: 'Entrepreneur, project manager, and fractional CMO. Founder of JetSpeedSocial in Naples, Florida.',
   jobTitle: 'Marketing Growth Partner and Fractional CMO',
   url: abs('/'),
   image: abs('/img/evan-portrait.webp'),
   worksFor: { '@id': abs('/#jetspeedsocial') },
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'Samford University' },
   homeLocation: { '@type': 'Place', name: 'Naples, Florida', geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon } },
-  sameAs: [site.linkedin, site.instagram],
+  sameAs: [site.linkedin, site.facebook, site.instagram],
 }
 
 const website = { '@type': 'WebSite', '@id': abs('/#website'), url: abs('/'), name: site.fullName, inLanguage: 'en-US', publisher: { '@id': abs('/#evan') } }
@@ -155,6 +159,10 @@ export function llmsTxt() {
 - Agency: ${site.company} (${site.agency})
 - Location: ${site.address}
 - Phone: ${site.phone}
+- Email: ${site.email}
+- Hours: ${site.hours} (Eastern)
+- Also known as: ${site.nickname}
+- Facebook: ${site.facebook}
 - Book a call: ${site.bookLink}
 - Education: Samford University
 - LinkedIn: ${site.linkedin}
@@ -173,7 +181,10 @@ ${cases.map((c) => `- [${c.client}: ${c.headline}](${abs(`/work/${c.slug}/`)}): 
 - Map: ${site.mapsLink}
 
 ## Services
-${services.map((s) => `- ${s.name}: ${s.body}`).join('\n')}
+${services.map((s) => `- ${s.name}: ${s.body}${s.items ? ` Includes ${s.items.join(', ')}.` : ''}`).join('\n')}
+
+## Ventures
+${ventures.map((v) => `- ${v.name} (${v.status}): ${v.note}. ${v.url}`).join('\n')}
 
 ## Frequently asked questions
 ${[...faq, ...local.faq].map((f) => `### ${f.q}\n${f.a}`).join('\n\n')}
