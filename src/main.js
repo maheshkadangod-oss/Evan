@@ -7,7 +7,9 @@ import { prepare, decode } from './scramble.js'
 // Page HTML is pre-rendered at build time (src/render.js). This file only adds motion and the header.
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.config({ ignoreMobileResize: true }) // the phone address bar showing and hiding should not jolt pinned sections
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+// Search engines and AI crawlers get the page as written: no count-ups from zero, no scrambled headlines.
+const crawler = /bot|crawl|spider|slurp|lighthouse|inspectiontool|facebookexternalhit|embedly|quora|pinterest|preview/i.test(navigator.userAgent)
+const reduced = crawler || window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const mm = gsap.matchMedia()
 const DESK = '(min-width: 961px)'
 const MOB = '(max-width: 960px)'
@@ -107,8 +109,8 @@ function countUp(el, tl, at = 0) {
   const dec = (num.split('.')[1] || '').length
   const o = { v: 0 }
   const fmt = (v) => pre + (dec ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US')) + post
-  el.textContent = fmt(0)
-  tl.to(o, { v: end, duration: 1.6, ease: 'power2.out', onUpdate: () => (el.textContent = fmt(o.v)) }, at)
+  // the real number stays in place until this count-up actually starts
+  tl.to(o, { v: end, duration: 1.6, ease: 'power2.out', onStart: () => (el.textContent = fmt(0)), onUpdate: () => (el.textContent = fmt(o.v)), onComplete: () => (el.textContent = raw) }, at)
 }
 
 // ---------- motion ----------
