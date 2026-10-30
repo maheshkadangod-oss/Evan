@@ -74,14 +74,16 @@ document.querySelectorAll('[data-spy]').forEach((a) => {
   if (!sec || a.closest('.menu')) return
   ScrollTrigger.create({ trigger: sec, start: 'top 45%', end: 'bottom 45%', onToggle: (st) => st.isActive && setActive(a.dataset.spy) })
 })
-ScrollTrigger.create({ trigger: '.hero', start: 'top top', end: 'bottom 45%', onToggle: (st) => st.isActive && setActive(null) })
+ScrollTrigger.create({ trigger: '.nameplate', start: 'top top', endTrigger: '.intro', end: 'bottom 45%', onToggle: (st) => st.isActive && setActive(null) })
 ScrollTrigger.create({ trigger: '.cta', start: 'top 45%', end: 'bottom top', onToggle: (st) => st.isActive && setActive(null) })
+// the 'Nice to meet you' scene introduces Evan, so it counts as About
+ScrollTrigger.create({ trigger: '.meet', start: 'top 45%', end: 'bottom 45%', onToggle: (st) => st.isActive && setActive('about') })
 
 // phone: quick-contact bar shows after the hero, hides at the closing call to action
 if (mbar) {
   const show = () => document.body.classList.add('mbar-on')
   const hide = () => document.body.classList.remove('mbar-on')
-  ScrollTrigger.create({ trigger: '.hero', start: 'bottom 60%', endTrigger: '.cta', end: 'top 85%', onEnter: show, onEnterBack: show, onLeave: hide, onLeaveBack: hide })
+  ScrollTrigger.create({ trigger: '.nameplate', start: 'bottom 60%', endTrigger: '.cta', end: 'top 85%', onEnter: show, onEnterBack: show, onLeave: hide, onLeaveBack: hide })
 }
 
 // ---------- swipe carousels on phones (proof stats, case studies) ----------
@@ -115,18 +117,35 @@ function countUp(el, tl, at = 0) {
 
 // ---------- motion ----------
 if (!reduced) {
-  // hero entrance
-  const intro = gsap.timeline({ delay: 0.15 })
-  intro.from('.hero h1 .line > span', { yPercent: 105, duration: 1.2, stagger: 0.12, ease: 'power4.out' })
-    .from('.hero .rv', { y: 26, autoAlpha: 0, duration: 0.9, stagger: 0.08, ease: 'power3.out' }, '-=0.8')
-    .from('.portrait-frame', { clipPath: 'inset(100% 0 0 0)', duration: 1.4, ease: 'power4.inOut' }, 0.1)
-    .from('.portrait img', { scale: 1.2, duration: 1.8, ease: 'power3.out' }, 0.1)
-    .from('.float-card', { y: 30, autoAlpha: 0, duration: 1, ease: 'power3.out' }, 0.9)
-    .from('.fc-bar', { scaleX: 0, duration: 1.1, stagger: 0.15, ease: 'power3.out' }, 1.1)
+  // nameplate entrance: Evan fades up out of the dark, then his name rises letter-row by row
+  gsap.timeline({ delay: 0.1 })
+    .from('.np-photo img', { autoAlpha: 0, scale: 1.12, duration: 2, ease: 'power3.out' }, 0)
+    .from('.np-name .nm > span', { yPercent: 110, duration: 1.3, stagger: 0.1, ease: 'power4.out' }, 0.35)
+    .from('.np-meta li, .np-cta, .np-touch, .np-down', { y: 16, autoAlpha: 0, duration: 0.9, stagger: 0.06, ease: 'power3.out' }, 0.8)
     .from('.nav > *', { y: -16, autoAlpha: 0, duration: 0.8, stagger: 0.06, ease: 'power3.out' }, 0.2)
-  document.querySelectorAll('.proof strong').forEach((el) => countUp(el, intro, 0.8))
-  const heroWords = prepare(document.querySelectorAll('.hero h1 .line > span'))
-  intro.call(() => decode(heroWords, { duration: 1.4 }), null, 0.25)
+
+  // leaving the nameplate: the photo keeps zooming in while the name lifts away
+  gsap.timeline({ scrollTrigger: { trigger: '.nameplate', start: 'top top', end: 'bottom top', scrub: true } })
+    .to('.np-photo img', { scale: 1.28, yPercent: 8, ease: 'none' }, 0)
+    .to('.np-row', { yPercent: -60, autoAlpha: 0.2, ease: 'none' }, 0)
+    .to('.np-meta, .np-touch, .np-down', { autoAlpha: 0, ease: 'none' }, 0)
+
+  // intro numbers count up when they arrive
+  const proofTl = gsap.timeline({ scrollTrigger: { trigger: '.proof', start: 'top 88%' } })
+  document.querySelectorAll('.proof strong').forEach((el, i) => countUp(el, proofTl, i * 0.12))
+
+  // "Nice to meet you": the scene holds while Evan steps out of the dark and the words slide over him
+  const meet = document.querySelector('.meet')
+  if (meet) {
+    gsap.timeline({
+      scrollTrigger: { trigger: meet, start: 'top top', end: () => '+=' + Math.round(window.innerHeight * 1.3), pin: true, scrub: 0.6, refreshPriority: 5 },
+    })
+      .fromTo('.meet-photo img', { scale: 0.82, filter: 'brightness(0.35)' }, { scale: 1.18, filter: 'brightness(1)', ease: 'none', duration: 1 }, 0)
+      .from('.meet-notes li', { y: 20, autoAlpha: 0, stagger: 0.08, duration: 0.25 }, 0.05)
+      .from('.meet-title .ml > span', { yPercent: 110, stagger: 0.12, duration: 0.35, ease: 'power3.out' }, 0.5)
+      .to('.meet-notes li', { autoAlpha: 0, duration: 0.2 }, 0.75)
+  }
+
   const ctaWords = prepare(document.querySelectorAll('.cta h2 .line > span'))
   ScrollTrigger.create({ trigger: '.cta', start: 'top 70%', once: true, onEnter: () => decode(ctaWords, { duration: 1.3 }) })
 
@@ -212,13 +231,6 @@ if (!reduced) {
     gsap.utils.toArray('.from-left, .from-right').forEach((el) =>
       gsap.from(el, { x: el.classList.contains('from-left') ? -80 : 80, autoAlpha: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 82%' } })
     )
-    // hero gently splits apart as you leave it
-    gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 20%', scrub: true } })
-      .to('.hero h1 .line:first-child', { xPercent: -6, ease: 'none' }, 0)
-      .to('.hero h1 .line:last-child', { xPercent: 6, ease: 'none' }, 0)
-      .to('.hero-copy', { autoAlpha: 0.15, ease: 'none' }, 0)
-      .to('.portrait-frame img', { yPercent: 8, scale: 1.06, ease: 'none' }, 0)
-      .to('.float-card', { y: -60, ease: 'none' }, 0)
     // charts float a little slower than their story
     gsap.utils.toArray('.case-viz').forEach((v) =>
       gsap.fromTo(v, { y: 50 }, { y: -50, ease: 'none', scrollTrigger: { trigger: v.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } })
@@ -231,13 +243,6 @@ if (!reduced) {
     gsap.utils.toArray('.from-left, .from-right').forEach((el) =>
       gsap.from(el, { x: el.classList.contains('from-left') ? -48 : 48, autoAlpha: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 86%' } })
     )
-
-    // hero: the photo settles and drifts, the headline splits apart as you scroll away
-    gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } })
-      .fromTo('.portrait-frame img', { scale: 1.08 }, { scale: 1.2, yPercent: 10, ease: 'none' }, 0)
-      .to('.hero h1 .line:first-child', { xPercent: -10, ease: 'none' }, 0)
-      .to('.hero h1 .line:last-child', { xPercent: 10, ease: 'none' }, 0)
-      .to('.float-card', { y: -50, autoAlpha: 0, ease: 'none' }, 0)
 
     // case studies stack: each card sticks, and the one underneath sinks back as the next slides over it
     const cards = gsap.utils.toArray('.cases > .case')
@@ -315,4 +320,6 @@ if (window.matchMedia('(hover: hover)').matches) {
   document.addEventListener('pointerout', (e) => { if (!e.relatedTarget?.closest?.('[data-tip]')) tip.classList.remove('show') })
 }
 
+// pinned scenes measure first (higher refreshPriority), so every trigger below them lands in the right place
+ScrollTrigger.sort()
 window.addEventListener('load', () => ScrollTrigger.refresh())

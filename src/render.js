@@ -107,26 +107,31 @@ function caseBlock(c, i) {
 
 export function renderHome() {
   return `
-<section class="hero" id="top">
-  <div class="hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow rv"><span class="eb-long">${hero.eyebrow}</span><span class="eb-short">Growth partner · Naples, FL</span></p>
-      <h1>${hero.lines.map((l, i, all) => i === all.length - 1 ? `<span class="line"><span>${l.replace(/\.$/, '')}</span><span class="dot">.</span></span>` : `<span class="line"><span>${l}</span></span>`).join(' ')}</h1>
-      <p class="lead rv">${hero.sub}</p>
-      <div class="btns rv">
-        <a class="btn primary" href="${site.bookLink}" ${ext}>${hero.primary}<i aria-hidden="true">→</i></a>
-        <a class="btn ghost" href="#work">${hero.secondary}</a>
-      </div>
+<section class="nameplate" id="top">
+  <div class="np-photo"><img src="/img/evan-hero.webp" alt="Evan “Jet” Lee, marketing growth partner and founder of JetSpeedSocial, in Naples, Florida" width="880" height="700" fetchpriority="high" /></div>
+  <ul class="np-meta">
+    <li>Marketing growth partner<br />and fractional CMO</li>
+    <li>Based in<br />${site.city}</li>
+    <li>Founder of<br /><a href="${site.agency}" ${ext}>${site.company}</a></li>
+    <li>© ${year}</li>
+  </ul>
+  <div class="np-row">
+    <h1 class="np-name"><span class="nm"><span>Evan</span></span> <span class="nm"><span>Lee</span></span><span class="sr-only">, marketing growth partner and fractional CMO in Naples, Florida</span></h1>
+    <a class="np-cta" href="${site.bookLink}" ${ext}>Book a call <i aria-hidden="true">↗</i></a>
+  </div>
+  <p class="np-touch">Get in touch at<br /><a href="mailto:${site.email}">${site.email}</a></p>
+  <a class="np-down" href="#intro" aria-label="Scroll to the introduction">↓</a>
+</section>
+
+<section class="intro" id="intro">
+  <p class="eyebrow rv"><span class="eb-long">${hero.eyebrow}</span><span class="eb-short">Growth partner · Naples, FL</span></p>
+  <h2 class="intro-title sw">${words(hero.lines.join(' ').replace(/\.$/, ''))}<span class="dot">.</span></h2>
+  <div class="intro-row">
+    <p class="lead rv">${hero.sub}</p>
+    <div class="btns rv">
+      <a class="btn primary" href="${site.bookLink}" ${ext}>${hero.primary}<i aria-hidden="true">→</i></a>
+      <a class="btn ghost" href="#work">${hero.secondary}</a>
     </div>
-    <figure class="portrait rv">
-      <div class="portrait-frame"><img src="/img/evan-portrait.webp" alt="Evan “Jet” Lee, marketing growth partner, in Naples, Florida" width="824" height="1030" fetchpriority="high" /></div>
-      <figcaption><span>${site.name}</span><span>${site.city}</span></figcaption>
-      <div class="float-card" aria-hidden="true">
-        <span class="fc-k">Peddinghaus · Google Ads</span>
-        <div class="fc-row"><span>Before</span><b class="fc-bar base" style="--v:.39"></b><em>2 to 3x</em></div>
-        <div class="fc-row"><span>Now</span><b class="fc-bar hi" style="--v:1"></b><em>6.34x</em></div>
-      </div>
-    </figure>
   </div>
   <ul class="proof" data-carousel>
     ${hero.proof.map((p) => `<li class="rv"><strong>${p.value}</strong><span>${p.label}</span></li>`).join('')}
@@ -205,6 +210,16 @@ export function renderHome() {
       </svg>
     </figure>
   </div>
+</section>
+
+<section class="meet" aria-label="Meet Evan">
+  <ul class="meet-notes">
+    <li>Growing businesses<br />for 10+ years</li>
+    <li>Currently running<br />${site.company}</li>
+    <li>Open to growth<br />partnerships</li>
+  </ul>
+  <div class="meet-photo"><img src="/img/evan-hero.webp" alt="" loading="lazy" width="880" height="700" /></div>
+  <h2 class="meet-title"><span class="ml"><span>Nice to</span></span><span class="ml"><span>meet you<i class="dot">.</i></span></span></h2>
 </section>
 
 <section class="about" id="about">

@@ -140,6 +140,49 @@ h2 { font-size: clamp(36px, 4.4vw, 66px); line-height: 1.02; letter-spacing: -0.
 .proof strong { font-family: var(--serif); font-weight: 600; font-size: clamp(40px, 4vw, 60px); line-height: 1; letter-spacing: -0.02em; }
 .proof span { color: var(--mute); font-size: 15px; max-width: 30ch; }
 
+/* ---------- nameplate: the name over Evan, the opening screen ---------- */
+.nameplate { position: relative; height: 100vh; height: 100svh; min-height: 620px; overflow: hidden; padding: 0 var(--gutter); }
+.nameplate > * { max-width: none; }
+.nameplate::before { content: ''; position: absolute; z-index: 1; inset: 0 0 auto 0; height: 170px; pointer-events: none; background: linear-gradient(180deg, rgba(15, 13, 11, 0.85), rgba(15, 13, 11, 0)); }
+.np-photo { position: absolute; z-index: 0; bottom: 0; left: 54%; transform: translateX(-50%); height: 100%; aspect-ratio: 880 / 700; max-width: none; pointer-events: none; }
+.np-photo::before { content: ''; position: absolute; inset: 8% 10% 0; background: radial-gradient(50% 55% at 50% 38%, rgba(255, 140, 60, 0.22), transparent 70%); filter: blur(20px); }
+.np-photo img { position: relative; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform-origin: 50% 30%; }
+.np-meta { position: absolute; z-index: 2; top: 104px; left: var(--gutter); right: var(--gutter); list-style: none; display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 24px; font-size: 13px; line-height: 1.45; color: var(--mute); }
+.np-meta a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+.np-meta a:hover { color: var(--accent-ink); }
+.np-row { position: absolute; z-index: 2; left: var(--gutter); right: var(--gutter); bottom: 7vh; display: flex; align-items: flex-start; gap: clamp(18px, 3vw, 48px); }
+.np-name { font-family: var(--serif); font-weight: 700; font-size: clamp(96px, 17vw, 300px); line-height: 0.8; letter-spacing: -0.055em; color: var(--ink); margin: 0; white-space: nowrap; }
+.np-name .nm { display: inline-block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; vertical-align: top; }
+.np-name .nm > span { display: inline-block; }
+.np-cta { margin-top: 0.6vw; font-family: var(--serif); font-weight: 600; font-size: clamp(20px, 2.1vw, 34px); letter-spacing: -0.02em; color: var(--ink); white-space: nowrap; transition: color 0.2s; }
+.np-cta i { font-style: normal; color: var(--accent); display: inline-block; transition: transform 0.3s; }
+.np-cta:hover { color: var(--accent-ink); }
+.np-cta:hover i { transform: translate(3px, -3px); }
+.np-touch { position: absolute; z-index: 2; right: var(--gutter); bottom: 7vh; text-align: right; font-size: 13px; line-height: 1.5; color: var(--mute); }
+.np-touch a { color: var(--ink-2); }
+.np-touch a:hover { color: var(--accent-ink); }
+.np-down { position: absolute; z-index: 2; left: 50%; bottom: 3vh; font-size: 14px; color: var(--mute); animation: bob 2.2s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(5px); } }
+
+/* ---------- intro: the promise, right after the name ---------- */
+.intro { padding-block: clamp(90px, 16vh, 180px) 40px; }
+.intro .eyebrow { margin-bottom: 26px; }
+.intro-title { font-size: clamp(52px, 8.6vw, 148px); font-weight: 700; line-height: 0.92; letter-spacing: -0.045em; max-width: 12ch; margin-bottom: 44px; }
+.intro-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+.intro-row .lead { max-width: 44ch; }
+
+/* ---------- "Nice to meet you" ---------- */
+.meet { position: relative; height: 100vh; height: 100svh; min-height: 600px; overflow: hidden; display: grid; place-items: center; padding: 0 var(--gutter); }
+.meet > * { max-width: none; }
+.meet-photo { width: min(78vw, 980px); aspect-ratio: 880 / 700; -webkit-mask-image: radial-gradient(60% 62% at 50% 42%, #000 55%, transparent 100%); mask-image: radial-gradient(60% 62% at 50% 42%, #000 55%, transparent 100%); }
+.meet-photo img { width: 100%; height: 100%; object-fit: contain; transform-origin: 50% 35%; }
+.meet-notes { position: absolute; z-index: 2; top: 104px; left: var(--gutter); right: var(--gutter); list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+.meet-notes li:last-child { text-align: right; }
+.meet-title { position: absolute; z-index: 2; right: var(--gutter); bottom: 8vh; text-align: right; font-size: clamp(64px, 10.5vw, 180px); font-weight: 700; line-height: 0.9; letter-spacing: -0.05em; }
+.meet-title .ml { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.meet-title .ml > span { display: inline-block; }
+.meet-title .dot { font-style: normal; color: var(--accent); }
+
 /* ---------- industries ---------- */
 .industries { padding-block: 72px 40px; overflow: hidden; }
 .industries .kicker { color: var(--mute); text-align: center; }
@@ -580,4 +623,24 @@ body.sub { background: radial-gradient(1200px 600px at 75% -10%, rgba(217, 98, 4
   .local-map iframe { height: 300px; }
   .local-services, .local-faq { margin-top: 56px; }
   .local-page .cp-head .btns .btn { flex: 1 1 100%; justify-content: center; }
+
+  /* nameplate on phones: Evan large, name in two lines over the fade */
+  .nameplate { min-height: 560px; }
+  .np-photo { left: 50%; bottom: 24svh; height: 76svh; }
+  .np-photo img { object-position: 50% 100%; }
+  .np-meta { top: 84px; grid-template-columns: 1fr 1fr; font-size: 12px; }
+  .np-meta li:nth-child(n+3) { display: none; }
+  .np-meta li:nth-child(2) { text-align: right; }
+  .np-row { flex-direction: column; gap: 14px; bottom: 6svh; }
+  .np-name { font-size: 31vw; white-space: normal; line-height: 0.82; }
+  .np-name .nm { display: block; }
+  .np-cta { margin: 0; font-size: 20px; }
+  .np-touch, .np-down { display: none; }
+  .intro { padding-block: 72px 24px; }
+  .intro-title { font-size: clamp(46px, 13vw, 64px); margin-bottom: 26px; }
+  .intro-row .btns { width: 100%; }
+  .intro-row .btns .btn { flex: 1 1 auto; justify-content: center; }
+  .meet-photo { width: 128vw; }
+  .meet-notes { top: 84px; font-size: 11.5px; gap: 12px; }
+  .meet-title { font-size: 17vw; bottom: 10svh; }
 }
