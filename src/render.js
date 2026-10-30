@@ -108,7 +108,7 @@ function caseBlock(c, i) {
 export function renderHome() {
   return `
 <section class="nameplate" id="top">
-  <div class="np-photo"><img src="/img/evan-hero.webp" alt="Evan “Jet” Lee, marketing growth partner and founder of JetSpeedSocial, in Naples, Florida" width="880" height="700" fetchpriority="high" /></div>
+  <div class="np-photo"><img src="/img/evan-hero.webp" alt="Evan “Jet” Lee, marketing growth partner and founder of JetSpeedSocial, in Naples, Florida" width="590" height="470" fetchpriority="high" /></div>
   <ul class="np-meta">
     <li>Marketing growth partner<br />and fractional CMO</li>
     <li>Based in<br />${site.city}</li>
@@ -218,7 +218,7 @@ export function renderHome() {
     <li>Currently running<br />${site.company}</li>
     <li>Open to growth<br />partnerships</li>
   </ul>
-  <div class="meet-photo"><img src="/img/evan-hero.webp" alt="" loading="lazy" width="880" height="700" /></div>
+  <div class="meet-photo"><img src="/img/evan-hero.webp" alt="" loading="lazy" width="590" height="470" /></div>
   <h2 class="meet-title"><span class="ml"><span>Nice to</span></span><span class="ml"><span>meet you<i class="dot">.</i></span></span></h2>
 </section>
 

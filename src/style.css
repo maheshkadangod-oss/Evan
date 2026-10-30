@@ -144,9 +144,9 @@ h2 { font-size: clamp(36px, 4.4vw, 66px); line-height: 1.02; letter-spacing: -0.
 .nameplate { position: relative; height: 100vh; height: 100svh; min-height: 620px; overflow: hidden; padding: 0 var(--gutter); }
 .nameplate > * { max-width: none; }
 .nameplate::before { content: ''; position: absolute; z-index: 1; inset: 0 0 auto 0; height: 170px; pointer-events: none; background: linear-gradient(180deg, rgba(15, 13, 11, 0.85), rgba(15, 13, 11, 0)); }
-.np-photo { position: absolute; z-index: 0; bottom: 0; left: 54%; transform: translateX(-50%); height: 100%; aspect-ratio: 880 / 700; max-width: none; pointer-events: none; }
+.np-photo { position: absolute; z-index: 0; top: 88px; left: 57%; transform: translateX(-50%); height: 72%; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 16%); mask-image: linear-gradient(180deg, transparent 0%, #000 16%); aspect-ratio: 590 / 470; max-width: none; pointer-events: none; }
 .np-photo::before { content: ''; position: absolute; inset: 8% 10% 0; background: radial-gradient(50% 55% at 50% 38%, rgba(255, 140, 60, 0.22), transparent 70%); filter: blur(20px); }
-.np-photo img { position: relative; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform-origin: 50% 30%; }
+.np-photo img { position: relative; width: 100%; height: 100%; object-fit: contain; object-position: 50% 0; transform-origin: 50% 30%; }
 .np-meta { position: absolute; z-index: 2; top: 104px; left: var(--gutter); right: var(--gutter); list-style: none; display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 24px; font-size: 13px; line-height: 1.45; color: var(--mute); }
 .np-meta a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
 .np-meta a:hover { color: var(--accent-ink); }
@@ -174,7 +174,7 @@ h2 { font-size: clamp(36px, 4.4vw, 66px); line-height: 1.02; letter-spacing: -0.
 /* ---------- "Nice to meet you" ---------- */
 .meet { position: relative; height: 100vh; height: 100svh; min-height: 600px; overflow: hidden; display: grid; place-items: center; padding: 0 var(--gutter); }
 .meet > * { max-width: none; }
-.meet-photo { width: min(78vw, 980px); aspect-ratio: 880 / 700; -webkit-mask-image: radial-gradient(60% 62% at 50% 42%, #000 55%, transparent 100%); mask-image: radial-gradient(60% 62% at 50% 42%, #000 55%, transparent 100%); }
+.meet-photo { width: min(70vw, 900px); aspect-ratio: 590 / 470; -webkit-mask-image: radial-gradient(60% 62% at 50% 42%, #000 55%, transparent 100%); mask-image: radial-gradient(60% 62% at 50% 42%, #000 55%, transparent 100%); }
 .meet-photo img { width: 100%; height: 100%; object-fit: contain; transform-origin: 50% 35%; }
 .meet-notes { position: absolute; z-index: 2; top: 104px; left: var(--gutter); right: var(--gutter); list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
 .meet-notes li:last-child { text-align: right; }
@@ -627,8 +627,8 @@ body.sub { background: radial-gradient(1200px 600px at 75% -10%, rgba(217, 98, 4
 
   /* nameplate on phones: Evan large, name in two lines over the fade */
   .nameplate { min-height: 560px; }
-  .np-photo { left: 50%; bottom: 24svh; height: 76svh; }
-  .np-photo img { object-position: 50% 100%; }
+  .np-photo { left: 50%; top: 64px; height: 58svh; }
+  .np-photo img { object-position: 50% 0; }
   .np-meta { top: 84px; grid-template-columns: 1fr 1fr; font-size: 12px; }
   .np-meta li:nth-child(n+3) { display: none; }
   .np-meta li:nth-child(2) { text-align: right; }
@@ -641,7 +641,7 @@ body.sub { background: radial-gradient(1200px 600px at 75% -10%, rgba(217, 98, 4
   .intro-title { font-size: clamp(46px, 13vw, 64px); margin-bottom: 26px; }
   .intro-row .btns { width: 100%; }
   .intro-row .btns .btn { flex: 1 1 auto; justify-content: center; }
-  .meet-photo { width: 128vw; }
+  .meet-photo { width: 118vw; }
   .meet-notes { top: 84px; font-size: 11.5px; gap: 12px; }
   .meet-title { font-size: 17vw; bottom: 10svh; }
 }
