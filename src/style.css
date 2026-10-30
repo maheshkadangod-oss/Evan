@@ -443,7 +443,8 @@ body.sub { background: radial-gradient(1200px 600px at 75% -10%, rgba(217, 98, 4
 @media (max-width: 960px) {
   .hero-grid, .split, .case, .dash, .cp-charts.two, .foot-grid { grid-template-columns: 1fr; }
   .foot { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
-  .foot-col a { padding-block: 6px; }
+  .foot-col a { padding-block: 11px; }
+  .np-cta { padding-block: 8px; }
   .foot-base { flex-direction: column; }
   .stat-row { border: 0; margin-bottom: 24px; }
   .stat-row li, .stat-row li + li { flex: 0 0 62%; scroll-snap-align: start; border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--card); }
