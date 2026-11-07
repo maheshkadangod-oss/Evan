@@ -10,7 +10,6 @@ ScrollTrigger.config({ ignoreMobileResize: true }) // the phone address bar show
 // Search engines and AI crawlers get the page as written: no count-ups from zero, no scrambled headlines.
 const crawler = /bot|crawl|spider|slurp|lighthouse|inspectiontool|facebookexternalhit|embedly|quora|pinterest|preview/i.test(navigator.userAgent)
 const reduced = crawler || window.matchMedia('(prefers-reduced-motion: reduce)').matches
-if (reduced) document.querySelector('.loader')?.remove() // no curtain for crawlers or reduced motion
 const mm = gsap.matchMedia()
 const DESK = '(min-width: 961px)'
 const MOB = '(max-width: 960px)'
@@ -125,24 +124,7 @@ if (!reduced) {
     .from('.np-meta li, .np-cta, .np-touch, .np-down', { y: 16, autoAlpha: 0, duration: 0.9, stagger: 0.06, ease: 'power3.out' }, 0.8)
     .from('.nav > *', { y: -16, autoAlpha: 0, duration: 0.8, stagger: 0.06, ease: 'power3.out' }, 0.2)
 
-  // opening reveal, once per visit: the name and a 0 to 100 count, then the curtain lifts into the nameplate
-  const loader = document.querySelector('.loader')
-  let seen = false
-  try { seen = sessionStorage.getItem('el-intro') === '1'; sessionStorage.setItem('el-intro', '1') } catch {}
-  if (loader && !seen) {
-    const count = loader.querySelector('.ld-count')
-    const n = { v: 0 }
-    lenis.stop()
-    gsap.timeline({ onComplete: () => { loader.remove(); lenis.start() } })
-      .from('.ld-name', { yPercent: 100, autoAlpha: 0, duration: 0.7, ease: 'power3.out' })
-      .to(n, { v: 100, duration: 1.2, ease: 'power2.inOut', onUpdate: () => (count.textContent = Math.round(n.v)) }, 0.1)
-      .to('.ld-bar b', { scaleX: 1, duration: 1.2, ease: 'power2.inOut' }, 0.1)
-      .to(loader, { yPercent: -100, duration: 0.9, ease: 'power4.inOut' }, '+=0.15')
-      .add(() => npIntro.play(), '-=0.45')
-  } else {
-    loader?.remove()
-    npIntro.play()
-  }
+  npIntro.play()
 
   // leaving the nameplate: the photo keeps zooming in while the name lifts away
   gsap.timeline({ scrollTrigger: { trigger: '.nameplate', start: 'top top', end: 'bottom top', scrub: true } })
@@ -322,19 +304,8 @@ document.querySelectorAll('[data-place]').forEach((el) => {
   el.addEventListener('click', () => { document.querySelectorAll('[data-place].on').forEach((n) => n.classList.remove('on')); on(true) })
 })
 
-// ---------- custom cursor and magnetic buttons (mouse only) ----------
+// ---------- magnetic buttons (mouse only) ----------
 if (!reduced && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  const dot = document.createElement('div'); dot.className = 'cur-dot'
-  const ring = document.createElement('div'); ring.className = 'cur-ring'
-  document.body.append(dot, ring)
-  document.documentElement.classList.add('has-cursor')
-  const dx = gsap.quickTo(dot, 'x', { duration: 0.1 }), dy = gsap.quickTo(dot, 'y', { duration: 0.1 })
-  const rx = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3' }), ry = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3' })
-  window.addEventListener('pointermove', (e) => { dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY) })
-  document.addEventListener('pointerover', (e) => ring.classList.toggle('on', !!e.target.closest('a, button, summary, [data-tip]')))
-  document.addEventListener('pointerleave', () => gsap.to([dot, ring], { autoAlpha: 0, duration: 0.2 }))
-  document.addEventListener('pointerenter', () => gsap.to([dot, ring], { autoAlpha: 1, duration: 0.2 }))
-
   // buttons lean toward the pointer, then spring back
   document.querySelectorAll('.btn.primary, .np-cta, .nav-cta, .socials a, .foot-big').forEach((el) => {
     const pull = el.classList.contains('foot-big') ? 0.12 : 0.3
