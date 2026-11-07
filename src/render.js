@@ -86,6 +86,7 @@ export function footerHtml() {
       ${ventures.map((v) => `<a href="${v.url}" ${ext}>${v.name}<small>${v.status}</small></a>`).join('')}
     </div>
   </div>
+  <a class="foot-big" href="${site.bookLink}" ${ext}><span>Let’s talk</span><i aria-hidden="true">↗</i></a>
   <div class="foot-base"><span>© ${year} ${site.fullName}</span><span>${site.city}</span></div>
 </footer>`
 }
@@ -141,6 +142,7 @@ export function renderHome() {
 <section class="industries" aria-label="Industries served">
   <p class="kicker">Industries I’ve helped grow</p>
   <div class="ind-track">${[...industries, ...industries].map((x, i) => `<span${i >= industries.length ? ' aria-hidden="true"' : ''}>${x}</span>`).join('')}</div>
+  <div class="ind-track rev" aria-hidden="true">${[...services.flatMap((sv) => sv.items || []), ...services.flatMap((sv) => sv.items || [])].map((x) => `<span>${x}</span>`).join('')}</div>
 </section>
 
 <section class="numbers" id="numbers">
